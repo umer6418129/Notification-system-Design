@@ -1,11 +1,14 @@
 import { createUserRole } from "../../data-access/repositories/sql/rolesRepository";
 import { create, get, getOnce, update } from "../../data-access/repositories/sql/userRepository";
+import { get as getRoles } from "../../data-access/repositories/sql/rolesRepository";
 import { sendEmail } from "../../helpers/notificationsHelper/mail";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { AssignRoleRequest } from "../../presentation/interfaces/request/RoleRequest";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { emailTemplateTypes, responseMessages } from "../../utils/constant";
+import { assignRole } from "./RoleService";
+import logger from "../../presentation/middleware/logger";
 
 
 export const getUsers = async (req: any) => {
@@ -92,6 +95,14 @@ export const verifyUser = async (req: any) => {
             otp: null,
             isVerified: true
         })
+        let getUserRole = await getRoles({name : "User"});
+        let UserRole = getUserRole.find(x => x.name == "User");
+        if (getUserRole){
+            let assignUser = await assignRole({userId : user.id , roleIds : [UserRole.id]});
+            if (assignUser)
+                logger.info(`New User UuserId : ${user.id}`)
+        }
+
         if (makeVerified <= 0)
             response = responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "verified user") });
         else

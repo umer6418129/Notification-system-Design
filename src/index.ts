@@ -82,15 +82,15 @@ const dailyJob = schedule.scheduleJob('0 0 * * *', () => {
 // };
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, async () => {
   console.log(`Server started on port ${PORT}`);
 
   try {
     // Authenticate and sync sequelize
-    // await postgressDb.authenticate();
-    // await postgressDb.sync({ alter: true });
-    // console.log("Database connection has been established and synchronized successfully.");
+    await postgressDb.authenticate();
+    await postgressDb.sync({ alter: true });
+    console.log("Database connection has been established and synchronized successfully.");
     // await dropViewsAndRules();
     // await recreateViewsAndRules();
     // await runSeeders();

@@ -70,7 +70,7 @@ export const assignRoleUser = async (req: any) => {
     }
 }
 
-const assignRole = async (body: AssignRoleRequest) => {
+export const assignRole = async (body: AssignRoleRequest) => {
     try {
         let ifExist = await getOnce({ id: body?.userId });
         if (!ifExist) return responseHelper(0, responseMessages.notFound.replace("{replace}", "User"));
