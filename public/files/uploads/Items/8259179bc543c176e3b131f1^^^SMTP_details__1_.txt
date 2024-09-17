@@ -1,0 +1,8 @@
+LOG IN DETAILS
+
+Testing
+Email: testingsmtp07@gmail.com
+Password: SMTP@email
+
+APP PASSWORD
+App Password: bwhxuyrsolofzudr

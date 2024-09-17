@@ -1,0 +1,25 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/media/umer/UserData/Umer_WorkSpace/Other/Node_with_typeScript_base/logs/.7865b36a135eb9f070b4bd72d3ab561c5fdc5d86-audit.json",
+    "files": [
+        {
+            "date": 1725526348878,
+            "name": "/media/umer/UserData/Umer_WorkSpace/Other/Node_with_typeScript_base/logs/2024-09-05.log",
+            "hash": "d8607e42031eb2e06781862bc1ba8baf26bc7f20b4e6c3f43178ebc64e21df17"
+        },
+        {
+            "date": 1725616227401,
+            "name": "/media/umer/UserData/Umer_WorkSpace/Other/Node_with_typeScript_base/logs/2024-09-06.log",
+            "hash": "13477b532da83653cca0455eb5f9c643dc52bc42cba37b925a05f0f8cafd02b5"
+        },
+        {
+            "date": 1725692567432,
+            "name": "/media/umer/UserData/Umer_WorkSpace/Other/Node_with_typeScript_base/logs/2024-09-07.log",
+            "hash": "93d1de3be778b9d5bb18b53a5e9067b4966d548ec1b971b03e4ad9a751e74e36"
+        }
+    ],
+    "hashType": "sha256"
+}
