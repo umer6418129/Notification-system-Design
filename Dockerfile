@@ -1,5 +1,5 @@
 # Use the official Node.js image.
-FROM node:18
+FROM node:22
 
 # Create and set the working directory.
 WORKDIR /usr/src/app
@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 4000
 
 # Start the application.
-CMD [ "npm", "start" ]
+CMD [ "npm", "run","dev" ]

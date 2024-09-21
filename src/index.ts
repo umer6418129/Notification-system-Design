@@ -6,11 +6,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import logger from "./presentation/middleware/logger";
 import { responseHelper } from "./helpers/response";
-import postgressDb from "./domain/sql/models/index";
+// import postgressDb from "./domain/sql/models/index";
 
 const swaggerSpec = require("../swagger");
 import swaggerUi from 'swagger-ui-express';
-import { defineAssociations } from "./domain/sql/associations/Association";
+// import { defineAssociations } from "./domain/sql/associations/Association";
 import schedule from 'node-schedule';
 import connectToMongoDB from "./domain/mongo/models/mongodb";
 import { up } from "./data-access/seeders/mongo";
@@ -105,4 +105,4 @@ app.listen(PORT, async () => {
 });
 
 // Define associations
-defineAssociations();
+// defineAssociations();
