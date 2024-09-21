@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IUser } from '../../presentation/interfaces/Mongo_Schemas_Interfaces/User';
+import { IUser } from '../../../presentation/interfaces/Mongo_Schemas_Interfaces/User';
 
 
 // Define the Mongoose schema

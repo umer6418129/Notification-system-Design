@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IItemOne } from '../../presentation/interfaces/Mongo_Schemas_Interfaces/ItemOne';
+import { IItemOne } from '../../../presentation/interfaces/Mongo_Schemas_Interfaces/ItemOne';
 
 
 // Define the Mongoose schema

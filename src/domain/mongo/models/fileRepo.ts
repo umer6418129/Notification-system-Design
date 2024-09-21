@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IFileRepo } from '../../presentation/interfaces/Mongo_Schemas_Interfaces/FileRepo';
+import { IFileRepo } from '../../../presentation/interfaces/Mongo_Schemas_Interfaces/FileRepo';
 
 
 

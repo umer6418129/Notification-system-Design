@@ -12,7 +12,7 @@ const swaggerSpec = require("../swagger");
 import swaggerUi from 'swagger-ui-express';
 import { defineAssociations } from "./domain/sql/associations/Association";
 import schedule from 'node-schedule';
-import connectToMongoDB from "./domain/mongo/mongodb";
+import connectToMongoDB from "./domain/mongo/models/mongodb";
 
 
 const routes = require("./presentation/routes/route");
