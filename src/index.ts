@@ -12,6 +12,7 @@ const swaggerSpec = require("../swagger");
 import swaggerUi from 'swagger-ui-express';
 import { defineAssociations } from "./domain/sql/associations/Association";
 import schedule from 'node-schedule';
+import connectToMongoDB from "./domain/mongo/mongodb";
 
 
 const routes = require("./presentation/routes/route");
@@ -88,9 +89,10 @@ app.listen(PORT, async () => {
 
   try {
     // Authenticate and sync sequelize
-    await postgressDb.authenticate();
-    await postgressDb.sync({ alter: true });
-    console.log("Database connection has been established and synchronized successfully.");
+    // await postgressDb.authenticate();
+    // await postgressDb.sync({ alter: true });
+    // console.log("Database connection has been established and synchronized successfully.");
+    await connectToMongoDB();
     // await dropViewsAndRules();
     // await recreateViewsAndRules();
     // await runSeeders();
