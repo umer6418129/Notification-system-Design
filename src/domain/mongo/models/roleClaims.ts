@@ -5,7 +5,7 @@ import { IRoleClaims } from '../../../presentation/interfaces/Mongo_Schemas_Inte
 const RoleClaimsSchema: Schema = new Schema<IRoleClaims>(
   {
     roleId: {
-      type: Number,
+      type: String,
       required: false,
     },
     claimValue: {

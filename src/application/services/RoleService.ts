@@ -1,5 +1,5 @@
-import { create, createUserRole, deleteRoleClaims, deleteroles, get, getById, getUserRoles, maintainRoleClaims, update } from "../../data-access/repositories/sql/rolesRepository";
-import { getOnce } from "../../data-access/repositories/sql/userRepository";
+import { create, createUserRole, deleteRoleClaims, deleteRoles, get, getById, getUserRoles, maintainRoleClaims, update } from "../../data-access/repositories/mongo/rolesRepository";
+import { getOnce } from "../../data-access/repositories/mongo/userRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { AssignRolePermissionsRequest, AssignRoleRequest, RoleRequest } from "../../presentation/interfaces/request/RoleRequest";
 import { responseMessages } from "../../utils/constant";
@@ -50,7 +50,7 @@ export const deleteRole = async (req: any) => {
         let checkIfUsed = await getUserRoles({ roleId: id });
         if (checkIfUsed.length > 0) return responseHelper(0, { message: responseMessages.inUse.replace("{replace}", "Role") });
         let deleteClaimsFirst = await deleteRoleClaims({ roleId: id })
-        let deleteRole = await deleteroles({ id: id })
+        let deleteRole = await deleteRoles({ id: id })
         if (deleteRole > 0) return responseHelper(1, { message: responseMessages.success.replace("{replace}", "Role deleted") })
         else return responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "delete role or role not exist") });
     } catch (error) {

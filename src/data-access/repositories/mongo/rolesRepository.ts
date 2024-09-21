@@ -22,6 +22,14 @@ export const get = async (params: any): Promise<any[]> => {
         throw error;
     }
 };
+export const getOnce = async (params: any): Promise<any> => {
+    try {
+        const roles = await Role.findOne(params).select("id name").sort({ id: -1 });
+        return roles || [];
+    } catch (error: any) {
+        throw error;
+    }
+};
 
 // Get user roles based on parameters
 export const getUserRoles = async (params: any = {}): Promise<any[]> => {

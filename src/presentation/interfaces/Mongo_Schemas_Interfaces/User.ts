@@ -7,6 +7,7 @@ export interface IUser extends Document {
     otp?: number;
     isVerified?: boolean;
     IsActive?: boolean;
+    userRoles?: any[];
     createdAt?: Date;
     updatedAt?: Date;
   }

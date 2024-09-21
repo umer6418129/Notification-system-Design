@@ -1,8 +1,6 @@
-import { create, deleteItems, get, getById, update } from "../../data-access/repositories/sql/itemOneRepository";
-import EmailTemplates from "../../domain/sql/models/emailTemplates";
+import { create, deleteItems, get, getById, update } from "../../data-access/repositories/mongo/itemOneRepository";
 import { dbUploadEntry, deleteFiles, deleteSelectedFiles, getFiles, getSingleFile } from "../../helpers/fileManager";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
-import { EmailTemplateRequest } from "../../presentation/interfaces/request/EmailTemplates";
 import { ItemOneRequest } from "../../presentation/interfaces/request/ItemOne";
 import { fileContants, responseMessages } from "../../utils/constant";
 
@@ -55,12 +53,12 @@ export const getItems = async (req: any) => {
 export const getItem = async (req: any) => {
     try {
         let response;
-        let item = await getById(parseInt(req.params.id));
+        let item = await getById(req.params.id);
         let itemWithFiles = await getFiles(
             [item],
             fileContants.Item
         );
-        itemWithFiles = itemWithFiles.find(x => x.id == parseInt(req.params.id));
+        itemWithFiles = itemWithFiles.find(x => x.id == req.params.id);
         response = responseHelper(1, itemWithFiles);
         return response
     } catch (error) {
@@ -78,7 +76,7 @@ export const updateItem = async (req: any) => {
             name: req.body.name,
         };
         let files = req.files.docs || [];
-        let item = await getById(parseInt(id));
+        let item = await getById(id);
         if (!item)
             return response = responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "Item") });
         let creation = await update({ id: id }, body);
@@ -109,7 +107,7 @@ export const updateItem = async (req: any) => {
 
 export const deleteItem = async (req: any) => {
     try {
-        let id = parseInt(req.params.id);
+        let id = req.params.id;
         let item = await getById(id);
         let response;
         if (!item)

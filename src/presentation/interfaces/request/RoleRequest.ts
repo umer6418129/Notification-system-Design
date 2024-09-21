@@ -3,8 +3,8 @@ export interface RoleRequest {
     name: string;
 }
 export interface AssignRoleRequest {
-    roleIds: number[];
-    userId: number;
+    roleIds: any[];
+    userId: any;
 }
 export interface AssignRolePermissionsRequest {
     roleId: number;

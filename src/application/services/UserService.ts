@@ -1,9 +1,6 @@
-import { createUserRole } from "../../data-access/repositories/sql/rolesRepository";
-import { create, get, getOnce, update } from "../../data-access/repositories/sql/userRepository";
-import { get as getRoles } from "../../data-access/repositories/sql/rolesRepository";
-import { sendEmail } from "../../helpers/notificationsHelper/mail";
+import { create, get, getOnce, update } from "../../data-access/repositories/mongo/userRepository";
+import { get as getRoles } from "../../data-access/repositories/mongo/rolesRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
-import { AssignRoleRequest } from "../../presentation/interfaces/request/RoleRequest";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { emailTemplateTypes, responseMessages } from "../../utils/constant";

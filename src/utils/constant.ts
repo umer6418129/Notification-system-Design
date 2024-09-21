@@ -51,6 +51,10 @@ export const fileContants = {
     Item: "Items",
 };
 
+export const permanentRoles = {
+    Admin : "Admin",
+    notificationConsumer : "Notification Consumer"
+}
 export const claims = {
     createItemOne: "Create Item One",
     updateItemOne: "Update Item One",
@@ -67,7 +71,7 @@ export const claims = {
     ViewUser: "View User",
 }
 
-const adminPermissions : string[]=[
+export const adminPermissions : string[]=[
     claims.createItemOne,
     claims.updateItemOne,
     claims.ViewItemOne,

@@ -31,6 +31,10 @@ const UserSchema: Schema = new Schema<IUser>(
       default: true, // defaultValue equivalent
       required: false,
     },
+    userRoles: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'UserRoles', // Reference to the UserRoles model
+  }],
   },
   {
     timestamps: true, // Automatically manage createdAt and updatedAt fields

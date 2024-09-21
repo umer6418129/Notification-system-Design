@@ -5,16 +5,17 @@ import { IUserRoles } from '../../../presentation/interfaces/Mongo_Schemas_Inter
 const UserRolesSchema: Schema = new Schema<IUserRoles>(
   {
     userId: {
-      type: Number,  // Sequelize's INTEGER equivalent
-      required: false,  // allowNull equivalent
+      type: mongoose.Types.ObjectId,
+      required: false,
     },
     roleId: {
-      type: Number,  // Sequelize's INTEGER equivalent
-      required: false,  // allowNull equivalent
+      type: mongoose.Types.ObjectId,
+      required: false,
     },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
+    strict: true,      // Enforce schema structure; set to false if you want to allow other fields
   }
 );
 

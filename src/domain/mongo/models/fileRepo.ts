@@ -7,7 +7,7 @@ import { IFileRepo } from '../../../presentation/interfaces/Mongo_Schemas_Interf
 const FileRepoSchema: Schema = new Schema<IFileRepo>(
   {
     refId: {
-      type: Number, // Sequelize's INTEGER equivalent
+      type: mongoose.Types.ObjectId, // Sequelize's INTEGER equivalent
       required: false, // allowNull equivalent
     },
     refTableName: {

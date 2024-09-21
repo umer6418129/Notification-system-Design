@@ -13,6 +13,7 @@ import swaggerUi from 'swagger-ui-express';
 import { defineAssociations } from "./domain/sql/associations/Association";
 import schedule from 'node-schedule';
 import connectToMongoDB from "./domain/mongo/models/mongodb";
+import { up } from "./data-access/seeders/mongo";
 
 
 const routes = require("./presentation/routes/route");
@@ -76,11 +77,12 @@ const dailyJob = schedule.scheduleJob('0 0 * * *', () => {
   console.log("This job runs every day at midnight!");
 });
 // // Seeder execution
-// const runSeeders = async () => {
-//   const queryInterface = sequelize.getQueryInterface();
-//   await seedData.up(queryInterface, sequelize);
-//   console.log('Seed data has been inserted');
-// };
+const runSeeders = async () => {
+  // const queryInterface = sequelize.getQueryInterface();
+  // await seedData.up(queryInterface, sequelize);
+  await up();
+  console.log('Seed data has been inserted');
+};
 
 // Start server
 const PORT = process.env.PORT;
@@ -95,7 +97,7 @@ app.listen(PORT, async () => {
     await connectToMongoDB();
     // await dropViewsAndRules();
     // await recreateViewsAndRules();
-    // await runSeeders();
+    await runSeeders();
   } catch (error) {
     console.error("Unable to connect to the database:", error);
     logger.error("Unable to connect to the database:" + error);

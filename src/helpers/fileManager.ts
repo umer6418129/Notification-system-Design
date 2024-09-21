@@ -1,7 +1,7 @@
 import multer from "multer";
 import crypto from "crypto";
 import fs from "fs";
-import FileRepo from "../domain/sql/models/fileRepo";
+import FileRepo from "../domain/mongo/models/fileRepo";
 
 export const fileUpload = (type: any) => {
     return multer.diskStorage({
@@ -70,14 +70,14 @@ export const updateFile = async (refId: number, refTableName: string, req: any) 
 export const deleteFiles = async (refTableName: string, refId: number) => {
     try {
         // Find and delete associated files
-        const files = await FileRepo.findAll({
+        const files = await FileRepo.find({
             where: { refId: refId, refTableName: refTableName },
         });
         for (const file of files) {
             fs.unlinkSync(
                 "public/files/uploads/" + file.refTableName + "/" + file.path
             );
-            await FileRepo.destroy({ where: { id: file.id } });
+            await FileRepo.deleteMany({ where: { id: file.id } });
         }
         return true
     } catch (error: any) {
@@ -86,18 +86,20 @@ export const deleteFiles = async (refTableName: string, refId: number) => {
 };
 export const deleteSelectedFiles = async (ids = []) => {
     try {
-        const files = await FileRepo.findAll({
+        const files = await FileRepo.find({
             where: { id: ids },
         });
 
         await Promise.all(
             files.map(async (file) => {
                 try {
-                    if (fs.existsSync(file.path))
-                        await fs.promises.unlink(
-                            "public/files/uploads/" + file.refTableName + "/" + file.path
-                        );
-                    await FileRepo.destroy({ where: { id: file.id } });
+                    if (file.path) {
+                        const filePath = `public/files/uploads/${file.refTableName}/${file.path}`;
+                        if (fs.existsSync(filePath)) {
+                            await fs.promises.unlink(filePath);
+                        }
+                    }
+                    await FileRepo.deleteMany({ where: { id: file.id } });
                 } catch (error) {
                     console.error("Error deleting file:", error);
                     // Handle specific error scenarios here if needed
@@ -114,7 +116,7 @@ export const getFiles = async (schemaName: any, refTable: string) => {
     try {
         const data = await Promise.all(
             schemaName.map(async (schema: any) => {
-                const allFiles = await FileRepo.findAll({
+                const allFiles = await FileRepo.find({
                     where: { refTableName: refTable, refId: schema.id },
                 });
                 let schemaObject = schema.toJSON ? schema.toJSON() : schema; // Convert to JSON if it's a Sequelize instance

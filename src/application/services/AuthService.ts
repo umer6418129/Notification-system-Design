@@ -1,4 +1,4 @@
-import { create, getOnce } from "../../data-access/repositories/sql/userRepository"
+import { create, getOnce } from "../../data-access/repositories/mongo/userRepository"
 import { catchResponseHelper, responseHelper } from "../../helpers/response"
 import { emailTemplateTypes, general, responseMessages } from "../../utils/constant"
 import jwt from "jsonwebtoken";
@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { sendEmail } from "../../helpers/notificationsHelper/mail";
-import { getUserRoles } from "../../data-access/repositories/sql/rolesRepository";
+import { getUserRoles } from "../../data-access/repositories/mongo/rolesRepository";
 dotenv.config();
 
 export const register = async (req: any) => {

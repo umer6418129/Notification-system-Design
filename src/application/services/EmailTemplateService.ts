@@ -1,5 +1,4 @@
-import { create, get, getById } from "../../data-access/repositories/sql/emailTemplatesRepository";
-import EmailTemplates from "../../domain/sql/models/emailTemplates";
+import { create, get, getById } from "../../data-access/repositories/mongo/emailTemplatesRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { EmailTemplateRequest } from "../../presentation/interfaces/request/EmailTemplates";
 import { emailTemplateTypesEnum, responseMessages } from "../../utils/constant";
@@ -46,7 +45,7 @@ export const getTemplates = async (req: any) => {
 export const getTemplate = async (req: any) => {
     try {
         let response;
-        let template = await getById(parseInt(req.params.id));
+        let template = await getById(req.params.id);
         response = responseHelper(1, template);
         return response
     } catch (error) {
