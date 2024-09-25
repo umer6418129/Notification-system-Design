@@ -1,4 +1,4 @@
-import { adminPermissions, permanentRoles } from "../../../utils/constant"
+import { adminPermissions, notificationConsumerPermissions, permanentRoles } from "../../../utils/constant"
 import { create, get, maintainRoleClaims } from "../../repositories/mongo/rolesRepository"
 
 export const roleSeeder = async () => {
@@ -13,10 +13,10 @@ export const roleSeeder = async () => {
                 name: role
             })
             if (createRole){
-                let claims = createRole?.name ==  permanentRoles.Admin ? adminPermissions : []
+                let claims = createRole?.name ==  permanentRoles.Admin ? adminPermissions : notificationConsumerPermissions
                 let createRoleClaims = await maintainRoleClaims({
                     roleId : createRole.id,
-                    claims : claims
+                    claimValue : claims
                 })
             }
         }

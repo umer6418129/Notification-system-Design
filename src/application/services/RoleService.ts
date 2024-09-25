@@ -72,12 +72,12 @@ export const assignRoleUser = async (req: any) => {
 
 export const assignRole = async (body: AssignRoleRequest) => {
     try {
-        let ifExist = await getOnce({ id: body?.userId });
+        let ifExist = await getOnce({ _id: body?.userId });
         if (!ifExist) return responseHelper(0, responseMessages.notFound.replace("{replace}", "User"));
         let roleIds = body.roleIds;
         let allIdsExistance = true
         for (const roleId of roleIds) {
-            let role = await get({ id: roleId });
+            let role = await get({ _id: roleId });
             if (role.length <= 0) {
                 allIdsExistance = false
                 break

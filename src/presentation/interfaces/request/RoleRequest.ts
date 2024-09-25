@@ -8,5 +8,5 @@ export interface AssignRoleRequest {
 }
 export interface AssignRolePermissionsRequest {
     roleId: number;
-    claims: string[];
+    claimValue: string[];
 }

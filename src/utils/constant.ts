@@ -71,6 +71,12 @@ export const claims = {
     ViewUser: "View User",
 }
 
+export const notificationConsumerPermissions : string[]=[
+    claims.createItemOne,
+    claims.updateItemOne,
+    claims.ViewItemOne,
+    claims.deleteItemOne,
+]
 export const adminPermissions : string[]=[
     claims.createItemOne,
     claims.updateItemOne,

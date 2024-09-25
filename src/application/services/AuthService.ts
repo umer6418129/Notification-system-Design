@@ -21,28 +21,35 @@ export const register = async (req: any) => {
             password: encryptedPass,
             otp: otp
         };
-        let creation = await create(body);
-        if (creation) {
-            // let sendMailForOtp = await sendEmail(
-            //     req.body.email,
-            //     emailTemplateTypes.sendOtp,
-            //     {
-            //         Username: creation?.username,
-            //         Otp: creation?.otp
-            //     }
-            // )
+        let ifUserExist = await getOnce({email: req.body.email})
+        if(!ifUserExist){
+            let creation = await create(body);
+            if (creation) {
+                await initProducer({
+                    email : req.body.email,
+                    template : emailTemplateTypes.sendOtp,
+                    payload :{
+                        Username: creation?.username,
+                        Otp: creation?.otp
+                    }
+                },queueTypesNames.notifyOtpEmail);
+                response = responseHelper(1, { message: responseMessages.userCreated });
+            }
+            else
+                response = responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "Registeration") });
+        }else if(ifUserExist && !ifUserExist?.isVerified){
             await initProducer({
                 email : req.body.email,
                 template : emailTemplateTypes.sendOtp,
                 payload :{
-                    Username: creation?.username,
-                    Otp: creation?.otp
+                    Username: ifUserExist?.username,
+                    Otp: ifUserExist?.otp
                 }
             },queueTypesNames.notifyOtpEmail);
             response = responseHelper(1, { message: responseMessages.userCreated });
+        }else{
+            response = responseHelper(0, { message: responseMessages.alreadyExist.replace("{replace}","User") });
         }
-        else
-            response = responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "Registeration") });
         return response
     } catch (error) {
         let response = catchResponseHelper(error);

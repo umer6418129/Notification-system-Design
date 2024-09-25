@@ -2,9 +2,8 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { general } from "../../utils/constant";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
-import { roleClaims } from "../../data-access/repositories/sql/rolesRepository";
+import { roleClaims } from "../../data-access/repositories/mongo/rolesRepository";
 import { Op } from "sequelize";
-import RoleClaims from "../../domain/sql/models/roleClaims";
 dotenv.config();
 
 export function verifyToken(req: any, res: any, next: any) {
@@ -47,8 +46,8 @@ export const checkPermission = (permission: string) => {
         try {
             if (req.session.user?.roles) {
                 // Fetch role claims for the user's roles
-                let userPermissions: RoleClaims[] = await roleClaims({
-                    roleId: { [Op.in]: req.session.user?.roles }
+                let userPermissions: any[] = await roleClaims({
+                    roleId: { $in: req.session.user?.roles }
                 });
                 userPermissions = userPermissions
                     ? userPermissions.map((x: any) => x.claimValue) || []

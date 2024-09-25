@@ -103,7 +103,8 @@ export const createUserRole = async (body: AssignRoleRequest) => {
         const createdRoles = await Promise.all(
             roleIds.map(async (roleId: any) => {
                 const role = { roleId: roleId, userId: userId };
-                return await UserRoles.create(role);
+                let userRoles = await UserRoles.create(role) 
+                return userRoles;
             })
         );
         return createdRoles;

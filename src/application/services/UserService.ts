@@ -3,7 +3,7 @@ import { get as getRoles } from "../../data-access/repositories/mongo/rolesRepos
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
-import { emailTemplateTypes, responseMessages } from "../../utils/constant";
+import { emailTemplateTypes, permanentRoles, responseMessages } from "../../utils/constant";
 import { assignRole } from "./RoleService";
 import logger from "../../presentation/middleware/logger";
 
@@ -88,14 +88,14 @@ export const verifyUser = async (req: any) => {
             return response = responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "User") });
         if (user.otp != otp)
             return response = responseHelper(0, { message: responseMessages.incCorrect.replace("{replace}", "otp") });
-        let makeVerified = await update({ id: user?.id }, {
+        let makeVerified = await update({ _id: user?.id }, {
             otp: null,
             isVerified: true
         })
-        let getUserRole = await getRoles({name : "User"});
-        let UserRole = getUserRole.find(x => x.name == "User");
-        if (getUserRole){
-            let assignUser = await assignRole({userId : user.id , roleIds : [UserRole.id]});
+        let getUserRole = await getRoles({name : permanentRoles.notificationConsumer});
+        let UserRole = getUserRole.find(x => x.name == permanentRoles.notificationConsumer);
+        if (UserRole){
+            let assignUser = await assignRole({userId : user.id , roleIds : [UserRole.id ||UserRole._id ]});
             if (assignUser)
                 logger.info(`New User UuserId : ${user.id}`)
         }

@@ -10,7 +10,8 @@ export const userSeeder = async () => {
         let createUser = await create({
             username : "Admin",
             email : "admin@example.com",
-            password : await encrypt("123456")
+            password : await encrypt("123456"),
+            isVerified : true
         })
         if (createUser) {
             let FindRole = await getOnceRole({name : permanentRoles.Admin});

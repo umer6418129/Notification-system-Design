@@ -48,6 +48,6 @@ export const AssignRoleSchema = Joi.object({
     userId: Joi.number().required(),
 }).unknown(false);
 export const AssignRolePermissionSchema = Joi.object({
-    roleId: Joi.number().required(),
+    roleId: Joi.string().required(),
     claims: Joi.array().required(),
 }).unknown(false);
