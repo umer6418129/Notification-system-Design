@@ -1,12 +1,13 @@
 import { create, getOnce } from "../../data-access/repositories/mongo/userRepository"
 import { catchResponseHelper, responseHelper } from "../../helpers/response"
-import { emailTemplateTypes, general, responseMessages } from "../../utils/constant"
+import { emailTemplateTypes, general, queueTypesNames, responseMessages } from "../../utils/constant"
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { sendEmail } from "../../helpers/notificationsHelper/mail";
 import { getUserRoles } from "../../data-access/repositories/mongo/rolesRepository";
+import { initProducer } from "../../presentation/kafka/producer";
 dotenv.config();
 
 export const register = async (req: any) => {
@@ -22,14 +23,22 @@ export const register = async (req: any) => {
         };
         let creation = await create(body);
         if (creation) {
-            let sendMailForOtp = await sendEmail(
-                req.body.email,
-                emailTemplateTypes.sendOtp,
-                {
+            // let sendMailForOtp = await sendEmail(
+            //     req.body.email,
+            //     emailTemplateTypes.sendOtp,
+            //     {
+            //         Username: creation?.username,
+            //         Otp: creation?.otp
+            //     }
+            // )
+            await initProducer({
+                email : req.body.email,
+                template : emailTemplateTypes.sendOtp,
+                payload :{
                     Username: creation?.username,
                     Otp: creation?.otp
                 }
-            )
+            },queueTypesNames.notifyOtpEmail);
             response = responseHelper(1, { message: responseMessages.userCreated });
         }
         else

@@ -84,3 +84,19 @@ export const adminPermissions : string[]=[
     claims.assignRolePermission,
 ]
 
+export const queueTypesNames = {
+    notifyOtpEmail: "NOTIFY_OTP_EMAIL",
+}
+export const queueName = {
+    notifyOnEmailWhileTokenIssuedToInv: "Notify Investor while his tokens issued",
+}
+
+export const queueTypes = [
+    {
+        id: 1,
+        name: queueTypesNames.notifyOtpEmail,
+        priority: 1,
+        chunk: 10
+    },
+]
+

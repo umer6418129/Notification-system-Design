@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { emailConfigurations, emailTemplateTypesEnum } from "../../utils/constant";
-import { get } from "../../data-access/repositories/sql/emailTemplatesRepository";
+import { get } from "../../data-access/repositories/mongo/emailTemplatesRepository";
 import logger from "../../presentation/middleware/logger";
 
 export const sendEmail = async (
@@ -22,6 +22,7 @@ export const sendEmail = async (
                 html: `<span>${message?.content}</span>`
             };
             let info = await transporter.sendMail(mailOptions);
+            console.log("mail sent");
             return true;
         } else return false;
     } catch (error: any) {
