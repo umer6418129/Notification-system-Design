@@ -1,9 +1,18 @@
-import { createTemplate, getTemplate, getTemplates } from "../../application/services/EmailTemplateService";
+import { createTemplate, getTemplate, getTemplates, updateTemplate } from "../../application/services/EmailTemplateService";
 import { catchResponseHelper } from "../../helpers/response"
 
 export const create = async (req: any, res: any) => {
     try {
         let creation = await createTemplate(req);
+        res.json(creation);
+    } catch (error) {
+        let err = catchResponseHelper(error);
+        res.json(err);
+    }
+}
+export const update = async (req: any, res: any) => {
+    try {
+        let creation = await updateTemplate(req);
         res.json(creation);
     } catch (error) {
         let err = catchResponseHelper(error);

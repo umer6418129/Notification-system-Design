@@ -12,6 +12,15 @@ export const create = async (tempData: EmailTemplateRequest) => {
     }
 };
 
+export const update = async (param: any, data: EmailTemplateRequest) => {
+    try {
+        const result = await EmailTemplates.updateOne(param, { $set: data });
+        return result.modifiedCount;
+    } catch (error: any) {
+        catchResponseHelper(error);
+    }
+};
+
 // Get email templates based on parameters
 export const get = async (params: any): Promise<any[]> => {
     try {

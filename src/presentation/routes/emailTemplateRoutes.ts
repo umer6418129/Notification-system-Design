@@ -1,7 +1,7 @@
 import express from "express";
 import { validate } from "../middleware/validate";
 import { emailTemplateSchema } from "../validation/maintianDatavalidation";
-import { create, get, getById } from "../controllers/EmailTemplateController";
+import { create, get, getById, update } from "../controllers/EmailTemplateController";
 const router = express.Router();
 
 /**
@@ -67,6 +67,69 @@ const router = express.Router();
  */
 
 router.post("/email-template", validate(emailTemplateSchema), create);
+/**
+ * @swagger
+ * /email-template:
+ *   put:
+ *     summary: update a new email template
+ *     description: Endpoint to update a new email template with the required fields (typeId, content, and subject).
+ *     tags:
+ *       - Email Templates
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               typeId:
+ *                 type: integer
+ *                 description: Type ID of the email template.
+ *                 example: 1
+ *               content:
+ *                 type: string
+ *                 description: Content of the email template.
+ *                 example: "Welcome to our platform!"
+ *               subject:
+ *                 type: string
+ *                 description: Subject of the email template.
+ *                 example: "Welcome Email"
+ *             required:
+ *               - typeId
+ *               - content
+ *               - subject
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Email template updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Email template updated successfully
+ *       400:
+ *         description: Bad request, invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Validation error
+ */
+
+router.put("/email-template", validate(emailTemplateSchema), update);
 
 /**
  * @swagger

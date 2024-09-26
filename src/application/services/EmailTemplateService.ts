@@ -1,4 +1,4 @@
-import { create, get, getById } from "../../data-access/repositories/mongo/emailTemplatesRepository";
+import { create, get, getById, update } from "../../data-access/repositories/mongo/emailTemplatesRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { EmailTemplateRequest } from "../../presentation/interfaces/request/EmailTemplates";
 import { emailTemplateTypesEnum, responseMessages } from "../../utils/constant";
@@ -31,6 +31,27 @@ export const createTemplate = async (req: any) => {
     }
 }
 
+export const updateTemplate = async (req:any) => {
+    try {
+        let type = emailTemplateTypesEnum.find(x => x.id == parseInt(req.body.typeId));
+        if (!type)
+            return responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "Type") });
+        let checkIfExistAlready = await get({ typeId: parseInt(req.body.typeId) });
+        if (!checkIfExistAlready || checkIfExistAlready.length <= 0)
+            return responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "Email template") });
+
+        let body: EmailTemplateRequest = {
+            content: req.body.content,
+            subject: req.body.subject,
+        };
+        let updateTempate = await update({typeId : parseInt(req.body.typeId)},body);
+        if (updateTempate && updateTempate > 0) return responseHelper(1, { message: responseMessages.dataUpdated.replace("{replace}", "Email template") });
+        else return responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "Update Email template") });
+    } catch (error) {
+        let response = catchResponseHelper(error);
+        return response;
+    }
+}
 export const getTemplates = async (req: any) => {
     try {
         let response;

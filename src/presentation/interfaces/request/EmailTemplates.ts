@@ -1,5 +1,5 @@
 export interface EmailTemplateRequest {
-    typeId: number;
+    typeId?: number;
     content: string;
     subject: string;
 }
