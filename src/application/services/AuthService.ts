@@ -1,4 +1,4 @@
-import { create, getOnce } from "../../data-access/repositories/mongo/userRepository"
+import { create, getOnce } from "../../data-access/repositories/userRepository"
 import { catchResponseHelper, responseHelper } from "../../helpers/response"
 import { emailTemplateTypes, general, queueTypesNames, responseMessages } from "../../utils/constant"
 import jwt from "jsonwebtoken";
@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { sendEmail } from "../../helpers/notificationsHelper/mail";
-import { getUserRoles } from "../../data-access/repositories/mongo/rolesRepository";
+import { getUserRoles } from "../../data-access/repositories/rolesRepository";
 import { initProducer } from "../../presentation/kafka/producer";
 dotenv.config();
 

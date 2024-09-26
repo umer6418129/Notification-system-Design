@@ -1,4 +1,4 @@
-import { create, deleteItems, get, getById, update } from "../../data-access/repositories/mongo/itemOneRepository";
+import { create, deleteItems, get, getById, update } from "../../data-access/repositories/itemOneRepository";
 import { dbUploadEntry, deleteFiles, deleteSelectedFiles, getFiles, getSingleFile } from "../../helpers/fileManager";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { ItemOneRequest } from "../../presentation/interfaces/request/ItemOne";

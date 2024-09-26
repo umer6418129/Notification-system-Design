@@ -1,5 +1,5 @@
-import { create, createUserRole, deleteRoleClaims, deleteRoles, get, getById, getUserRoles, maintainRoleClaims, update } from "../../data-access/repositories/mongo/rolesRepository";
-import { getOnce } from "../../data-access/repositories/mongo/userRepository";
+import { create, createUserRole, deleteRoleClaims, deleteRoles, get, getById, getUserRoles, maintainRoleClaims, update } from "../../data-access/repositories/rolesRepository";
+import { getOnce } from "../../data-access/repositories/userRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { AssignRolePermissionsRequest, AssignRoleRequest, RoleRequest } from "../../presentation/interfaces/request/RoleRequest";
 import { responseMessages } from "../../utils/constant";

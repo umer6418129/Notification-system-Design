@@ -1,4 +1,4 @@
-import { create, get, getById, update } from "../../data-access/repositories/mongo/emailTemplatesRepository";
+import { create, get, getById, update } from "../../data-access/repositories/emailTemplatesRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { EmailTemplateRequest } from "../../presentation/interfaces/request/EmailTemplates";
 import { emailTemplateTypesEnum, responseMessages } from "../../utils/constant";

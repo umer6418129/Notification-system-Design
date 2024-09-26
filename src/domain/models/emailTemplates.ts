@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IEmailTemplate } from '../../../presentation/interfaces/Mongo_Schemas_Interfaces/EmailTemplates';
+import { IEmailTemplate } from '../../presentation/interfaces/Mongo_Schemas_Interfaces/EmailTemplates';
 const EmailTemplateSchema: Schema = new Schema<IEmailTemplate>(
   {
     typeId: {

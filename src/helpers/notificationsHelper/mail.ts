@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { emailConfigurations, emailTemplateTypesEnum } from "../../utils/constant";
-import { get } from "../../data-access/repositories/mongo/emailTemplatesRepository";
+import { get } from "../../data-access/repositories/emailTemplatesRepository";
 import logger from "../../presentation/middleware/logger";
 
 export const sendEmail = async (

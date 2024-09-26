@@ -1,6 +1,6 @@
-import ItemOne from '../../../domain/mongo/models/itemOne';
-import { catchResponseHelper } from '../../../helpers/response';
-import { ItemOneRequest } from '../../../presentation/interfaces/request/ItemOne';
+import ItemOne from '../../domain/models/itemOne';
+import { catchResponseHelper } from '../../helpers/response';
+import { ItemOneRequest } from '../../presentation/interfaces/request/ItemOne';
 
 // Create a new item
 export const create = async (tempData: ItemOneRequest) => {

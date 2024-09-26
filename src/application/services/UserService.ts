@@ -1,5 +1,5 @@
-import { create, get, getOnce, update } from "../../data-access/repositories/mongo/userRepository";
-import { get as getRoles } from "../../data-access/repositories/mongo/rolesRepository";
+import { create, get, getOnce, update } from "../../data-access/repositories/userRepository";
+import { get as getRoles } from "../../data-access/repositories/rolesRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { decrypt, encrypt } from "../../presentation/middleware/security";

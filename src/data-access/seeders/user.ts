@@ -1,8 +1,8 @@
 
-import { encrypt } from "../../../presentation/middleware/security";
-import { permanentRoles } from "../../../utils/constant";
-import { createUserRole, get , getOnce as getOnceRole } from "../../repositories/mongo/rolesRepository";
-import { create, getOnce } from "../../repositories/mongo/userRepository"
+import { encrypt } from "../../presentation/middleware/security";
+import { permanentRoles } from "../../utils/constant";
+import { createUserRole, get , getOnce as getOnceRole } from "../repositories/rolesRepository";
+import { create, getOnce } from "../repositories/userRepository"
 
 export const userSeeder = async () => {
     let FindUser = await getOnce({email : "admin@example.com"});

@@ -1,5 +1,5 @@
-import { adminPermissions, notificationConsumerPermissions, permanentRoles } from "../../../utils/constant"
-import { create, get, maintainRoleClaims } from "../../repositories/mongo/rolesRepository"
+import { adminPermissions, notificationConsumerPermissions, permanentRoles } from "../../utils/constant"
+import { create, get, maintainRoleClaims } from "../repositories/rolesRepository"
 
 export const roleSeeder = async () => {
     let roles : string[] = [

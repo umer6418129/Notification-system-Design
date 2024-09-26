@@ -1,6 +1,6 @@
-import EmailTemplates from '../../../domain/mongo/models/emailTemplates';
-import { catchResponseHelper } from '../../../helpers/response';
-import { EmailTemplateRequest } from '../../../presentation/interfaces/request/EmailTemplates';
+import EmailTemplates from '../../domain/models/emailTemplates';
+import { catchResponseHelper } from '../../helpers/response';
+import { EmailTemplateRequest } from '../../presentation/interfaces/request/EmailTemplates';
 
 // Create a new email template
 export const create = async (tempData: EmailTemplateRequest) => {

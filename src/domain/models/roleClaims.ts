@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IRoleClaims } from '../../../presentation/interfaces/Mongo_Schemas_Interfaces/Role';
+import { IRoleClaims } from '../../presentation/interfaces/Mongo_Schemas_Interfaces/Role';
 
 // Define the Mongoose schema
 const RoleClaimsSchema: Schema = new Schema<IRoleClaims>(

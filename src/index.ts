@@ -12,8 +12,8 @@ const swaggerSpec = require("../swagger");
 import swaggerUi from 'swagger-ui-express';
 // import { defineAssociations } from "./domain/sql/associations/Association";
 import schedule from 'node-schedule';
-import connectToMongoDB from "./domain/mongo/models/mongodb";
-import { up } from "./data-access/seeders/mongo";
+import connectToMongoDB from "./domain/models/mongodb";
+import { up } from "./data-access/seeders";
 import { initConsumer } from "./presentation/kafka/consumer";
 import { init } from "./presentation/kafka";
 
@@ -92,15 +92,8 @@ app.listen(PORT, async () => {
   console.log(`Server started on port ${PORT}`);
 
   try {
-    // Authenticate and sync sequelize
-    // await postgressDb.authenticate();
-    // await postgressDb.sync({ alter: true });
-    // console.log("Database connection has been established and synchronized successfully.");
     await connectToMongoDB();
-    // await dropViewsAndRules();
-    // await recreateViewsAndRules();
     await runSeeders();
-    // await init();
     await initConsumer();
   } catch (error) {
     console.error("Unable to connect to the database:", error);

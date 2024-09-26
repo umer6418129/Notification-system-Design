@@ -1,7 +1,7 @@
-import Role from '../../../domain/mongo/models/role';
-import RoleClaims from '../../../domain/mongo/models/roleClaims';
-import UserRoles from '../../../domain/mongo/models/userRoles';
-import { AssignRolePermissionsRequest, AssignRoleRequest, RoleRequest } from '../../../presentation/interfaces/request/RoleRequest';
+import Role from '../../domain/models/role';
+import RoleClaims from '../../domain/models/roleClaims';
+import UserRoles from '../../domain/models/userRoles';
+import { AssignRolePermissionsRequest, AssignRoleRequest, RoleRequest } from '../../presentation/interfaces/request/RoleRequest';
 
 // Create a new role
 export const create = async (tempData: RoleRequest) => {

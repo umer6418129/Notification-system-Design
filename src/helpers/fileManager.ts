@@ -1,7 +1,7 @@
 import multer from "multer";
 import crypto from "crypto";
 import fs from "fs";
-import FileRepo from "../domain/mongo/models/fileRepo";
+import FileRepo from "../domain/models/fileRepo";
 
 export const fileUpload = (type: any) => {
     return multer.diskStorage({

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { general } from "../../utils/constant";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
-import { roleClaims } from "../../data-access/repositories/mongo/rolesRepository";
+import { roleClaims } from "../../data-access/repositories/rolesRepository";
 import { Op } from "sequelize";
 dotenv.config();
 

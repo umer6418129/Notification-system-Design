@@ -1,7 +1,7 @@
-import User from '../../../domain/mongo/models/user';
-import { catchResponseHelper } from '../../../helpers/response';
-import { UserRequest } from '../../../presentation/interfaces/request/User';
-import logger from '../../../presentation/middleware/logger';
+import User from '../../domain/models/user';
+import { catchResponseHelper } from '../../helpers/response';
+import { UserRequest } from '../../presentation/interfaces/request/User';
+import logger from '../../presentation/middleware/logger';
 
 // Create a new user
 export const create = async (userData: UserRequest) => {
