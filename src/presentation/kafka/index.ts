@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Kafka } from "kafkajs";
 import { initProducer } from "./producer";
-import { queueTypesNames } from "../../utils/constant";
+import { kafkaMaintopics, queueTypesNames } from "../../utils/constant";
 
 dotenv.config();
 
@@ -16,12 +16,7 @@ export const init = async () => {
         await admin.connect();
         console.log("Kafka admin is connected");
         await admin.createTopics({
-            topics: [
-                {
-                    topic: queueTypesNames.notifyOtpEmail,
-                    numPartitions: 1
-                }
-            ]
+            topics: kafkaMaintopics
         })
         console.log("Topics created");
         admin.disconnect();

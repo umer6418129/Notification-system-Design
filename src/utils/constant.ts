@@ -105,4 +105,22 @@ export const queueTypes = [
         chunk: 10
     },
 ]
+export const kafkaMaintopicsNames = {
+    transaction: "Transactional_Messages",
+    promotional: "Promotional_Messages",
+}
+export const kafkaMaintopics = [
+    {
+        topic: queueTypesNames.notifyOtpEmail,
+        numPartitions: 1
+    },
+    {
+        topic: kafkaMaintopicsNames.transaction,
+        numPartitions: 4
+    },
+    {
+        topic: kafkaMaintopicsNames.promotional,
+        numPartitions: 1
+    }
+]
 

@@ -14,7 +14,7 @@ import swaggerUi from 'swagger-ui-express';
 import schedule from 'node-schedule';
 import connectToMongoDB from "./domain/models/mongodb";
 import { up } from "./data-access/seeders";
-import { initConsumer } from "./presentation/kafka/consumer";
+import { initConsumer, initPrmotionalMeaageConsumer } from "./presentation/kafka/consumer";
 import { init } from "./presentation/kafka";
 
 
@@ -94,7 +94,9 @@ app.listen(PORT, async () => {
   try {
     await connectToMongoDB();
     await runSeeders();
+    // await init()
     await initConsumer();
+    await initPrmotionalMeaageConsumer()
   } catch (error) {
     console.error("Unable to connect to the database:", error);
     logger.error("Unable to connect to the database:" + error);
