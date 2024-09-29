@@ -1,5 +1,6 @@
 import express from "express";
 import { create, verify } from "../controllers/UserController";
+import { create as createJob } from "../controllers/NotificationService";
 import { validate } from "../middleware/validate";
 import { userLoginSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
 import { registration, userLogin } from "../controllers/AuthController";
@@ -161,5 +162,66 @@ router.post("/auth-register", validate(userSchema), registration);
  */
 
 router.post("/auth-otp-verification", validate(userVerificationSchema), verify);
+/**
+ * @swagger
+ * /job:
+ *   post:
+ *     summary: Verify user with OTP
+ *     description: This endpoint verifies the user by matching the provided OTP with the user's email.
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: User verification successful.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating successful verification.
+ *                   example: User successfully verified.
+ *       400:
+ *         description: Invalid request data (e.g., missing or invalid email or OTP).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message explaining the error.
+ *                   example: Invalid OTP or email.
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating that the user was not found.
+ *                   example: User not found.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating server error.
+ *                   example: Internal server error.
+ */
+
+router.post("/job", createJob);
 
 module.exports = router

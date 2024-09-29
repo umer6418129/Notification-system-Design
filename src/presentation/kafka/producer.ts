@@ -1,8 +1,13 @@
+import { Partitioners } from "kafkajs";
 import { kafka } from "./index"
 
-export const initProducer = async (body: any, type: string) => {
+export const initProducer = async (body: any, type: string , partition? : number) => {
     try {
-        const producer = kafka.producer();
+        const producer = kafka.producer(
+            {
+                createPartitioner : Partitioners.LegacyPartitioner,
+            }
+        );
         await producer.connect();
         console.log('Connected to Kafka');
         body.type = type 
@@ -10,7 +15,7 @@ export const initProducer = async (body: any, type: string) => {
             topic: type,
             messages: [
                 {
-                    partition: 0, // Make sure this partition exists
+                    partition: partition,
                     key: body?.name || type,
                     value: JSON.stringify(body)
                 }

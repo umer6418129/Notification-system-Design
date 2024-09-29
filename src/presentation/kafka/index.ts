@@ -1,27 +1,56 @@
 import dotenv from "dotenv";
 import { Kafka } from "kafkajs";
-import { initProducer } from "./producer";
-import { kafkaMaintopics, queueTypesNames } from "../../utils/constant";
+import { kafkaMaintopics, kafkaMaintopicsNames, queueTypesNames } from "../../utils/constant";  // Import your topics
 
 dotenv.config();
 
+// Initialize Kafka client with new clientId
 export const kafka = new Kafka({
-    clientId: "node-base",
+    clientId: "notification-system",
     brokers: [process.env.BASEURL as string]
 });
 
 export const init = async () => {
     try {
-        const admin = kafka.admin();
+        const admin = kafka.admin();  // Admin connection to Kafka
         await admin.connect();
         console.log("Kafka admin is connected");
-        await admin.createTopics({
-            topics: kafkaMaintopics
-        })
-        console.log("Topics created");
-        admin.disconnect();
-        // await initProducer();
+
+        // Extract topic names from kafkaMaintopics to delete them
+        const topicsToDelete = kafkaMaintopics.map(topic => topic.topic);
+
+        // Delete existing topics
+        // await admin.deleteTopics({
+        //     topics: topicsToDelete,
+        // });
+        console.log(`Topics deleted: ${topicsToDelete.join(", ")}`);
+
+        // Recreate the topics
+        // await admin.createTopics({
+        //     topics: [
+        //         {
+        //             topic: queueTypesNames.notifyOtpEmail,
+        //             numPartitions: 1
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.promotional,
+        //             numPartitions: 1
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.transaction,
+        //             numPartitions: 4
+        //         },
+        //     ]
+        // });
+        const list = await admin.fetchTopicMetadata();
+        console.log("Listed Topic: " + JSON.stringify(list, null, 2));
+
+
+        console.log("Topics recreated");
+
+        // Disconnect the admin client
+        await admin.disconnect();
     } catch (error) {
-        console.error("Kafka admin is not connected", error);
+        console.error("Error during Kafka admin operations:", error);
     }
 };
