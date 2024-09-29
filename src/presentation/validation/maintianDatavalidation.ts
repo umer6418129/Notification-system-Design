@@ -51,3 +51,14 @@ export const AssignRolePermissionSchema = Joi.object({
     roleId: Joi.string().required(),
     claims: Joi.array().required(),
 }).unknown(false);
+export const EmailConfSystemPrefSchema = Joi.object({
+    service: Joi.string().required(),
+    host: Joi.string().required(),
+    port: Joi.number().required(),
+    secure: Joi.string().required(),
+    user: Joi.string().required(),
+    pass: Joi.string().required(),
+}).unknown(false);
+export const NotificationPrefSchema = Joi.object({
+    Email: Joi.boolean().required(),
+}).unknown(false);

@@ -18,7 +18,7 @@ const UserPrefSchema: Schema<IUserPref> = new Schema<IUserPref>(
       required: false,
     },
     value: {
-      type: String, 
+      type: Object, 
       required: false,
     },
   },

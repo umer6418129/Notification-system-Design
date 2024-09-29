@@ -118,7 +118,7 @@ export const maintainRoleClaims = async (body: AssignRolePermissionsRequest) => 
     try {
         const find = await RoleClaims.findOne({ roleId: body.roleId });
         if (find) {
-            const result = await RoleClaims.updateOne({ id: find.id }, { $set: body });
+            const result = await RoleClaims.updateOne({ _id: find.id || find._id}, { $set: body });
         } else {
             await RoleClaims.create(body);
         }

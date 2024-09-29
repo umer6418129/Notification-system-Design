@@ -10,10 +10,12 @@ const userRoutes = require("./userRoutes");
 const emailTemplateRoutes = require("./emailTemplateRoutes");
 const itemOneRoutes = require("./itemOneRoutes");
 const rolesRoutes = require("./rolesRoutes");
+const systemPrefRoutes = require("./systemPrefRoutes");
 
 
 router.use(authRoutes);
 router.use(verifyToken);
+router.use(systemPrefRoutes);
 router.use(userRoutes);
 router.use(emailTemplateRoutes);
 router.use(itemOneRoutes);

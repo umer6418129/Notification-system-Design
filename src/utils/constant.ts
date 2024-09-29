@@ -60,6 +60,7 @@ export const claims = {
     updateItemOne: "Update Item One",
     ViewItemOne: "View Item One",
     deleteItemOne: "Delete Item One",
+    updateCongigurations: "Update System Preferences",
     createRole: "Create Role",
     updateRole: "Update Role",
     ViewRole: "View Role",
@@ -72,10 +73,7 @@ export const claims = {
 }
 
 export const notificationConsumerPermissions : string[]=[
-    claims.createItemOne,
-    claims.updateItemOne,
-    claims.ViewItemOne,
-    claims.deleteItemOne,
+    claims.updateCongigurations
 ]
 export const adminPermissions : string[]=[
     claims.createItemOne,
@@ -122,5 +120,15 @@ export const kafkaMaintopics = [
         topic: kafkaMaintopicsNames.promotional,
         numPartitions: 1
     }
+]
+
+export const userPrefrencesTypes = {
+    notificationPref : "Notification_Preferences",
+    emailSmtp : "Email_Configurations"
+}
+
+export const PrefTypesArr = [
+    userPrefrencesTypes.emailSmtp,
+    userPrefrencesTypes.notificationPref
 ]
 

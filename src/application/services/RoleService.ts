@@ -96,7 +96,7 @@ export const assignRole = async (body: AssignRoleRequest) => {
 export const assignPermisson = async (req: any) => {
     try {
         let body = req.body;
-        let role = await get({ id: parseInt(body?.roleId) });
+        let role = await get({ _id: body?.roleId });
         if (role.length <= 0) return responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "Role") });
         body = {
             roleId: body.roleId,

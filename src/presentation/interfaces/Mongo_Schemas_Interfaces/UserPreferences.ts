@@ -4,5 +4,5 @@ export interface IUserPref extends Document {
     userId: mongoose.Types.ObjectId | string; // Allow both ObjectId or string
     name: string;
     type: string;
-    value: string;
+    value: Object;
   }
