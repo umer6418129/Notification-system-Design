@@ -1,12 +1,12 @@
 import logger from "../presentation/middleware/logger"
-import { queueTypesNames } from "../utils/constant"
+import { queueTypes, queueTypesNames } from "../utils/constant"
 import { sendEmail } from "./notificationsHelper/mail"
 
 export const processJob = async (job:any) => {
     try {
         if (!job || !job.type)return true
 
-        if (job.type == queueTypesNames.notifyOtpEmail) {
+        if (job.type == queueTypes.find(x => x.name == queueTypesNames.notifyOtpEmail)?.id) {
             let sendMailForOtp = await sendEmail(
                 job.email,
                 job.template,

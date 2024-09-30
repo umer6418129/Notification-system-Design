@@ -1,7 +1,7 @@
 import { Partitioners } from "kafkajs";
 import { kafka } from "./index"
 
-export const initProducer = async (body: any, type: string , partition? : number) => {
+export const initProducer = async (body: any, topic: string , partition? : number) => {
     try {
         const producer = kafka.producer(
             {
@@ -10,13 +10,13 @@ export const initProducer = async (body: any, type: string , partition? : number
         );
         await producer.connect();
         console.log('Connected to Kafka');
-        body.type = type 
+        body.topic = topic 
         let sendFrProdu = await producer.send({
-            topic: type,
+            topic: topic,
             messages: [
                 {
                     partition: partition,
-                    key: body?.name || type,
+                    key: body?.name || topic,
                     value: JSON.stringify(body)
                 }
             ]

@@ -90,6 +90,9 @@ export const adminPermissions : string[]=[
 
 export const queueTypesNames = {
     notifyOtpEmail: "NOTIFY_OTP_EMAIL",
+    confirmationEmail: "Confirmation email",
+    informationEmail: "Information email",
+    sensitiveEmail: "Sensitive email",
 }
 export const queueName = {
     notifyOnEmailWhileTokenIssuedToInv: "Notify Investor while his tokens issued",
@@ -100,7 +103,21 @@ export const queueTypes = [
         id: 1,
         name: queueTypesNames.notifyOtpEmail,
         priority: 1,
-        chunk: 10
+    },
+    {
+        id: 2,
+        name: queueTypesNames.sensitiveEmail,
+        priority: 1,
+    },
+    {
+        id: 3,
+        name: queueTypesNames.confirmationEmail,
+        priority: 2,
+    },
+    {
+        id: 4,
+        name: queueTypesNames.informationEmail,
+        priority: 3,
     },
 ]
 export const kafkaMaintopicsNames = {
@@ -131,4 +148,11 @@ export const PrefTypesArr = [
     userPrefrencesTypes.emailSmtp,
     userPrefrencesTypes.notificationPref
 ]
+
+export const queueStatus = {
+    InQueue : "In Queue",
+    InProcess : "In Process",
+    Completed : "Completed",
+    Failed : "Failed"
+}
 

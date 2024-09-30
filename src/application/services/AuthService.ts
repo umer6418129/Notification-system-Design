@@ -1,6 +1,6 @@
 import { create, getOnce } from "../../data-access/repositories/userRepository"
 import { catchResponseHelper, responseHelper } from "../../helpers/response"
-import { emailTemplateTypes, general, queueTypesNames, responseMessages } from "../../utils/constant"
+import { emailTemplateTypes, general, queueTypes, queueTypesNames, responseMessages } from "../../utils/constant"
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
@@ -44,7 +44,8 @@ export const register = async (req: any) => {
                 payload :{
                     Username: ifUserExist?.username,
                     Otp: ifUserExist?.otp
-                }
+                },
+                type : queueTypes.find(x => x.name == queueTypesNames.notifyOtpEmail)?.id
             },queueTypesNames.notifyOtpEmail);
             response = responseHelper(1, { message: responseMessages.userCreated });
         }else{
