@@ -16,7 +16,7 @@ const JobQueueSchema: Schema = new Schema<IJobQueue>(
       required: false,
     },
     status: {
-      type: Boolean,
+      type: String,
       required: false,
     },
     GUID: {

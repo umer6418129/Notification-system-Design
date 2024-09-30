@@ -39,6 +39,7 @@
     "express-session": "^1.18.0",
     "fs": "^0.0.1-security",
     "joi": "^17.13.3",
+    "js-guid": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "kafkajs": "^2.2.4",
     "mongodb": "^6.8.1",

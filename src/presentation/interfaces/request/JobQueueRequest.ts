@@ -4,5 +4,5 @@ export interface JobQueueRequest {
     type : number;
     payload : object;
     GUID : string
-    status? : boolean
+    status? : string
 }

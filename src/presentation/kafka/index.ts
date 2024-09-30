@@ -26,22 +26,29 @@ export const init = async () => {
         // console.log(`Topics deleted: ${topicsToDelete.join(", ")}`);
 
         // Recreate the topics
-        await admin.createTopics({
-            topics: [
-                {
-                    topic: queueTypesNames.notifyOtpEmail,
-                    numPartitions: 1
-                },
-                {
-                    topic: kafkaMaintopicsNames.promotional,
-                    numPartitions: 1
-                },
-                {
-                    topic: kafkaMaintopicsNames.transaction,
-                    numPartitions: 4
-                },
-            ]
-        });
+        // await admin.createTopics({
+        //     topics: [
+        //         {
+        //             topic: queueTypesNames.notifyOtpEmail,
+        //             numPartitions: 1
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.promotional,
+        //             numPartitions: 1
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.transaction,
+        //             numPartitions: 4
+        //         },
+        //     ]
+        // });
+        // await admin.createPartitions({
+        //     topicPartitions: [
+        //         { topic: queueTypesNames.notifyOtpEmail, count: 1 }, 
+        //         { topic: kafkaMaintopicsNames.promotional, count: 1 },
+        //         { topic: kafkaMaintopicsNames.transaction, count: 4 },
+        //     ],
+        // });
         const list = await admin.fetchTopicMetadata();
         console.log("Listed Topic: " + JSON.stringify(list, null, 2));
 
