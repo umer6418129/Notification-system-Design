@@ -17,6 +17,7 @@ import { up } from "./data-access/seeders";
 import { initConsumer, initConsumerForJobLog, initPrmotionalMeaageConsumer, initTransactionalMesaageConsumerFour, initTransactionalMesaageConsumerOne, initTransactionalMesaageConsumerThree, initTransactionalMesaageConsumerTwo } from "./presentation/kafka/consumer";
 import { init } from "./presentation/kafka";
 import { runningQueue } from "./presentation/queue/worker";
+import { monitorQueue } from "./presentation/queue/monitor";
 
 
 const routes = require("./presentation/routes/route");
@@ -104,6 +105,7 @@ app.listen(PORT, async () => {
     await initTransactionalMesaageConsumerFour()
     await initConsumerForJobLog()
     await runningQueue()
+    await monitorQueue()
   } catch (error) {
     console.error("Unable to connect to the database:", error);
     logger.error("Unable to connect to the database:" + error);
