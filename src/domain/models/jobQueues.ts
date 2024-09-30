@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { IJobQueue } from '../../presentation/interfaces/Mongo_Schemas_Interfaces/JobQueue';
 
-const ItemOneSchema: Schema = new Schema<IJobQueue>(
+const JobQueueSchema: Schema = new Schema<IJobQueue>(
   {
     name: {
       type: String,
@@ -28,6 +28,6 @@ const ItemOneSchema: Schema = new Schema<IJobQueue>(
     timestamps: true,
   }
 );
-const ItemOne = mongoose.model<IJobQueue>('ItemOne', ItemOneSchema);
+const JobQueue = mongoose.model<IJobQueue>('JobQueue', JobQueueSchema);
 
-export default ItemOne;
+export default JobQueue;
