@@ -16,6 +16,7 @@ import connectToMongoDB from "./domain/models/mongodb";
 import { up } from "./data-access/seeders";
 import { initConsumer, initConsumerForJobLog, initPrmotionalMeaageConsumer, initTransactionalMesaageConsumerFour, initTransactionalMesaageConsumerOne, initTransactionalMesaageConsumerThree, initTransactionalMesaageConsumerTwo } from "./presentation/kafka/consumer";
 import { init } from "./presentation/kafka";
+import { runningQueue } from "./presentation/queue/worker";
 
 
 const routes = require("./presentation/routes/route");
@@ -102,6 +103,7 @@ app.listen(PORT, async () => {
     await initTransactionalMesaageConsumerThree()
     await initTransactionalMesaageConsumerFour()
     await initConsumerForJobLog()
+    await runningQueue()
   } catch (error) {
     console.error("Unable to connect to the database:", error);
     logger.error("Unable to connect to the database:" + error);

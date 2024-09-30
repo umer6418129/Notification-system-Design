@@ -234,7 +234,7 @@ export const initConsumerForJobLog = async () => {
             let insertLog = await create(logobj)
             if (insertLog) {
               logger.info(`Job inserted into log GUID: ${insertLog.GUID}`);
-              await consumer.commitOffsets([{ topic, partition, offset: (parseInt(message.offset) + 1).toString() }]);
+              // await consumer.commitOffsets([{ topic, partition, offset: (parseInt(message.offset) + 1).toString() }]);
             } else {
               logger.error(`Something went wrong while log job into db GUID: ${logobj.GUID}`);
             }

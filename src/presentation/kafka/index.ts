@@ -44,8 +44,6 @@ export const init = async () => {
         // });
         // await admin.createPartitions({
         //     topicPartitions: [
-        //         { topic: queueTypesNames.notifyOtpEmail, count: 1 }, 
-        //         { topic: kafkaMaintopicsNames.promotional, count: 1 },
         //         { topic: kafkaMaintopicsNames.transaction, count: 4 },
         //     ],
         // });
