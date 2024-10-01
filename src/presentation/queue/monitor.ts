@@ -3,6 +3,7 @@ import { Queue } from 'bullmq';
 import IORedis from 'ioredis';
 import logger from '../middleware/logger';
 import dotenv from 'dotenv';
+import { exportBullQueueNames } from '../../utils/constant';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ export const monitorQueue = async () => {
     const connection = new IORedis();
 
     // Initialize the BullMQ Queue instance
-    const myQueue = new Queue(process.env.APPNAME as string, { connection });
+    const myQueue = new Queue(exportBullQueueNames.Email, { connection });
 
     // Initialize Arena with the actual queue instance
     const arena = Arena({
@@ -20,7 +21,7 @@ export const monitorQueue = async () => {
       queues: [
         {
           type: 'bullmq',
-          name: process.env.APPNAME as string,
+          name: exportBullQueueNames.Email,
           hostId: 'BullMQ Queue',
           // Provide the actual Queue instance as a function returning the instance
           queue: myQueue,

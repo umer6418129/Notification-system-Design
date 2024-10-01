@@ -52,8 +52,8 @@ export const fileContants = {
 };
 
 export const permanentRoles = {
-    Admin : "Admin",
-    notificationConsumer : "Notification Consumer"
+    Admin: "Admin",
+    notificationConsumer: "Notification Consumer"
 }
 export const claims = {
     createItemOne: "Create Item One",
@@ -72,10 +72,10 @@ export const claims = {
     ViewUser: "View User",
 }
 
-export const notificationConsumerPermissions : string[]=[
+export const notificationConsumerPermissions: string[] = [
     claims.updateCongigurations
 ]
-export const adminPermissions : string[]=[
+export const adminPermissions: string[] = [
     claims.createItemOne,
     claims.updateItemOne,
     claims.ViewItemOne,
@@ -90,15 +90,16 @@ export const adminPermissions : string[]=[
 
 export const queueTypesNames = {
     notifyOtpEmail: "NOTIFY_OTP_EMAIL",
-    confirmationEmail: "Confirmation email",
-    informationEmail: "Information email",
-    sensitiveEmail: "Sensitive email",
+    confirmationEmail: "Confirmation_email",
+    informationEmail: "Information_email",
+    sensitiveEmail: "Sensitive_email",
+    logPrecessedJobQueue: "Proccesed_Job_Queue",
 }
 export const queueName = {
     notifyOnEmailWhileTokenIssuedToInv: "Notify Investor while his tokens issued",
 }
 
-export const queueTypes = [
+export const queueTypes : any[] = [
     {
         id: 1,
         name: queueTypesNames.notifyOtpEmail,
@@ -119,10 +120,16 @@ export const queueTypes = [
         name: queueTypesNames.informationEmail,
         priority: 3,
     },
+    {
+        id: 5,
+        name: queueTypesNames.logPrecessedJobQueue,
+        priority: 1,
+    },
 ]
 export const kafkaMaintopicsNames = {
     transaction: "Transactional_Messages",
     promotional: "Promotional_Messages",
+    logPrecessedJobQueue: "Proccesed_Job_Queue",
 }
 export const kafkaMaintopics = [
     {
@@ -140,8 +147,8 @@ export const kafkaMaintopics = [
 ]
 
 export const userPrefrencesTypes = {
-    notificationPref : "Notification_Preferences",
-    emailSmtp : "Email_Configurations"
+    notificationPref: "Notification_Preferences",
+    emailSmtp: "Email_Configurations"
 }
 
 export const PrefTypesArr = [
@@ -149,10 +156,14 @@ export const PrefTypesArr = [
     userPrefrencesTypes.notificationPref
 ]
 
+export const exportBullQueueNames = {
+    Email: "Email"
+}
+
 export const queueStatus = {
-    InQueue : "In Queue",
-    InProcess : "In Process",
-    Completed : "Completed",
-    Failed : "Failed"
+    InQueue: "In Queue",
+    InProcess: "In Process",
+    Completed: "Completed",
+    Failed: "Failed"
 }
 

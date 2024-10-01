@@ -1,6 +1,6 @@
 import { create, get, getById, update } from "../../data-access/repositories/emailTemplatesRepository";
 import { catchResponseHelper, responseHelper } from "../../helpers/response";
-import { EmailTemplateRequest } from "../../presentation/interfaces/request/EmailTemplates";
+import { EmailTemplateRequest } from "../../presentation/interfaces/request/EmailInterfaces";
 import { emailTemplateTypesEnum, responseMessages } from "../../utils/constant";
 
 

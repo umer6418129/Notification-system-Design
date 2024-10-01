@@ -1,6 +1,6 @@
 import { create, getOnce } from "../../data-access/repositories/userRepository"
 import { catchResponseHelper, responseHelper } from "../../helpers/response"
-import { emailTemplateTypes, general, queueTypes, queueTypesNames, responseMessages } from "../../utils/constant"
+import { emailTemplateTypes, general, kafkaMaintopicsNames, queueTypes, queueTypesNames, responseMessages } from "../../utils/constant"
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
@@ -8,8 +8,10 @@ import { UserRequest } from "../../presentation/interfaces/request/User";
 import { sendEmail } from "../../helpers/notificationsHelper/mail";
 import { getUserRoles } from "../../data-access/repositories/rolesRepository";
 import { initProducer } from "../../presentation/kafka/producer";
+import { JobQueueRequest } from "../../presentation/interfaces/request/JobQueueRequest";
 dotenv.config();
-
+import { Guid } from 'js-guid';
+import { EmailWithTemplateRequest } from "../../presentation/interfaces/request/EmailInterfaces";
 export const register = async (req: any) => {
     try {
         let response;
@@ -21,35 +23,52 @@ export const register = async (req: any) => {
             password: encryptedPass,
             otp: otp
         };
-        let ifUserExist = await getOnce({email: req.body.email})
-        if(!ifUserExist){
+        let ifUserExist = await getOnce({ email: req.body.email })
+        if (!ifUserExist) {
             let creation = await create(body);
             if (creation) {
-                await initProducer({
-                    email : req.body.email,
-                    template : emailTemplateTypes.sendOtp,
-                    payload :{
-                        Username: creation?.username,
-                        Otp: creation?.otp
-                    }
-                },queueTypesNames.notifyOtpEmail);
+                const guid = new Guid();
+                let type = queueTypes.find(x => x.name == queueTypesNames.confirmationEmail)?.id;
+                let _guid = guid.toString()
+                let dataObj: JobQueueRequest = {
+                    name: queueTypesNames.confirmationEmail + "--" + _guid,
+                    payload: {
+                        email: req.body.email,
+                        template: emailTemplateTypes.sendOtp,
+                        payload: {
+                            Username: creation?.username,
+                            Otp: creation?.otp
+                        }
+                    },
+                    type: type,
+                    GUID: _guid
+                }
+                await initProducer(dataObj, kafkaMaintopicsNames.transaction);
                 response = responseHelper(1, { message: responseMessages.userCreated });
             }
             else
                 response = responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "Registeration") });
-        }else if(ifUserExist && !ifUserExist?.isVerified){
-            await initProducer({
-                email : req.body.email,
-                template : emailTemplateTypes.sendOtp,
-                payload :{
+        } else if (ifUserExist && !ifUserExist?.isVerified) {
+            const guid = new Guid();
+            let _guid = guid.toString()
+            let emailPayload: EmailWithTemplateRequest = {
+                email: req.body.email,
+                template: emailTemplateTypes.sendOtp,
+                payload: {
                     Username: ifUserExist?.username,
                     Otp: ifUserExist?.otp
-                },
-                type : queueTypes.find(x => x.name == queueTypesNames.notifyOtpEmail)?.id
-            },queueTypesNames.notifyOtpEmail);
+                }
+            }
+            let dataObj: JobQueueRequest = {
+                name: queueTypesNames.confirmationEmail + "--" + _guid,
+                payload: emailPayload,
+                type: queueTypes.find(x => x.name == queueTypesNames.notifyOtpEmail)?.id,
+                GUID: _guid
+            }
+            await initProducer(dataObj, kafkaMaintopicsNames.transaction);
             response = responseHelper(1, { message: responseMessages.userCreated });
-        }else{
-            response = responseHelper(0, { message: responseMessages.alreadyExist.replace("{replace}","User") });
+        } else {
+            response = responseHelper(0, { message: responseMessages.alreadyExist.replace("{replace}", "User") });
         }
         return response
     } catch (error) {

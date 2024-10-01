@@ -14,7 +14,7 @@ import swaggerUi from 'swagger-ui-express';
 import schedule from 'node-schedule';
 import connectToMongoDB from "./domain/models/mongodb";
 import { up } from "./data-access/seeders";
-import { initConsumer, initConsumerForJobLog, initPrmotionalMeaageConsumer, initTransactionalMesaageConsumerFour, initTransactionalMesaageConsumerOne, initTransactionalMesaageConsumerThree, initTransactionalMesaageConsumerTwo } from "./presentation/kafka/consumer";
+import { initAllConsumers } from "./presentation/kafka/consumer";
 import { init } from "./presentation/kafka";
 import { runningQueue } from "./presentation/queue/worker";
 import { monitorQueue } from "./presentation/queue/monitor";
@@ -97,15 +97,9 @@ app.listen(PORT, async () => {
     await connectToMongoDB();
     await runSeeders();
     // await init()
-    await initConsumer();
-    await initPrmotionalMeaageConsumer()
-    await initTransactionalMesaageConsumerOne()
-    await initTransactionalMesaageConsumerTwo()
-    await initTransactionalMesaageConsumerThree()
-    await initTransactionalMesaageConsumerFour()
-    await initConsumerForJobLog()
-    await runningQueue()
-    await monitorQueue()
+    await runningQueue();
+    await monitorQueue();
+    await initAllConsumers();
   } catch (error) {
     console.error("Unable to connect to the database:", error);
     logger.error("Unable to connect to the database:" + error);

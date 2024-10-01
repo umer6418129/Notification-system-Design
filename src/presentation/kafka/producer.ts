@@ -1,7 +1,8 @@
 import { Partitioners } from "kafkajs";
 import { kafka } from "./index"
+import { JobQueueRequest } from "../interfaces/request/JobQueueRequest";
 
-export const initProducer = async (body: any, topic: string , partition? : number) => {
+export const initProducer = async (body: JobQueueRequest, topic: string , partition? : number) => {
     try {
         const producer = kafka.producer(
             {
