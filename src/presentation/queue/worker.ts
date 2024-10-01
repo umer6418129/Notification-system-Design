@@ -39,7 +39,7 @@ export const runningQueue = async () => {
         connection,
         concurrency: 5,
         limiter: {
-          max: 1,
+          max: 16,
           duration: 1000
         },
       }

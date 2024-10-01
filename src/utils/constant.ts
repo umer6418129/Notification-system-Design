@@ -104,26 +104,31 @@ export const queueTypes : any[] = [
         id: 1,
         name: queueTypesNames.notifyOtpEmail,
         priority: 1,
+        chunk : 10
     },
     {
         id: 2,
         name: queueTypesNames.sensitiveEmail,
         priority: 1,
+        chunk : 16
     },
     {
         id: 3,
         name: queueTypesNames.confirmationEmail,
         priority: 2,
+        chunk : 16
     },
     {
         id: 4,
         name: queueTypesNames.informationEmail,
         priority: 3,
+        chunk : 4
     },
     {
         id: 5,
         name: queueTypesNames.logPrecessedJobQueue,
         priority: 1,
+        chunk : 50
     },
 ]
 export const kafkaMaintopicsNames = {

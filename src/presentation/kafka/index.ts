@@ -26,31 +26,32 @@ export const init = async () => {
         // console.log(`Topics deleted: ${topicsToDelete.join(", ")}`);
 
         // Recreate the topics
-        await admin.createTopics({
-            topics: [
-                // {
-                //     topic: queueTypesNames.notifyOtpEmail,
-                //     numPartitions: 1
-                // },
-                // {
-                //     topic: kafkaMaintopicsNames.promotional,
-                //     numPartitions: 1
-                // },
-                // {
-                //     topic: kafkaMaintopicsNames.transaction,
-                //     numPartitions: 4
-                // },
-                // {
-                //     topic: kafkaMaintopicsNames.logPrecessedJobQueue,
-                //     numPartitions: 3
-                // }
-            ]
-        });
-        // await admin.createPartitions({
-        //     topicPartitions: [
-        //         { topic: kafkaMaintopicsNames.transaction, count: 4 },
-        //     ],
+        // await admin.createTopics({
+        //     topics: [
+        //         {
+        //             topic: queueTypesNames.notifyOtpEmail,
+        //             numPartitions: 1
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.promotional,
+        //             numPartitions: 1
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.transaction,
+        //             numPartitions: 4
+        //         },
+        //         {
+        //             topic: kafkaMaintopicsNames.logPrecessedJobQueue,
+        //             numPartitions: 3
+        //         }
+        //     ]
         // });
+        await admin.createPartitions({
+            topicPartitions: [
+                { topic: kafkaMaintopicsNames.transaction, count: 4 },
+                // { topic: kafkaMaintopicsNames.logPrecessedJobQueue, count: 3 },
+            ],
+        });
         const list = await admin.fetchTopicMetadata();
         console.log("Listed Topic: " + JSON.stringify(list, null, 2));
 

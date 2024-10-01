@@ -16,7 +16,7 @@ export const processJob = async (job: JobQueueRequest) => {
             );
             if (!sendMailForOtp) return false
         }
-        return false
+        return true
         // let pushToQueue = await addJobs(job);
         // if (pushToQueue) return true;
         // else return false
