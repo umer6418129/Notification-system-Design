@@ -2,8 +2,10 @@ import nodemailer from "nodemailer";
 import { emailConfigurations, emailTemplateTypesEnum } from "../../utils/constant";
 import { get } from "../../data-access/repositories/emailTemplatesRepository";
 import logger from "../../presentation/middleware/logger";
+import { emailBodyInterFace } from "../../presentation/interfaces/general/email";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
-export const sendEmail = async (
+export const _sendEmail = async (
     email: any,
     type: any = "",
     replacements: any = null
@@ -30,6 +32,38 @@ export const sendEmail = async (
         return false; // Failed to send email
     }
 };
+export const sendEmail = async ({ email, message, emailConfigurations, subject }: emailBodyInterFace) => {
+    try {
+        // let emailConfiurations = JSON.parse(emailConfigurations);
+        // let message = message;
+        if (message) {
+            // Create a transporter object using the email configurations
+            let transporter = nodemailer.createTransport({
+                host: emailConfigurations.host,
+                port: emailConfigurations.port,
+                secure: emailConfigurations.secure,
+                auth: {
+                    user: emailConfigurations.auth.user,
+                    pass: emailConfigurations.auth.pass,
+                },
+            } as SMTPTransport.Options);
+            let mailOptions = {
+                // from: emailConfiurations.configurations?.auth?.user,
+                from: `Node Base <${emailConfigurations.auth.user}>`,
+                to: email,
+                // cc: emailConfigurations.,
+                subject: `${subject}`,
+                html: `<span>${message}</span>`
+            };
+            let info = await transporter.sendMail(mailOptions);
+            console.log("mail sent");
+            return true;
+        } else return false;
+    } catch (error: any) {
+        logger.error("Error occurred:", error.message);
+        return false; // Failed to send email
+    }
+}
 
 const tokenReplace = async (name: string, replacements: any) => {
     try {

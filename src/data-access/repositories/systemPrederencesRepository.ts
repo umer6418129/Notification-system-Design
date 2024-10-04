@@ -30,8 +30,8 @@ export const get = async (params: any): Promise<any[]> => {
 };
 export const getOnce = async (params: any): Promise<any> => {
     try {
-        const prefs = await UserPreferences.findOne(params).select("id name").sort({ id: -1 });
-        return prefs || [];
+        const prefs = await UserPreferences.findOne(params).select("id type value").sort({ id: -1 });
+        return prefs;
     } catch (error: any) {
         throw error;
     }

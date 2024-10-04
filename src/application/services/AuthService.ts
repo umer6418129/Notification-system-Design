@@ -5,13 +5,13 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { UserRequest } from "../../presentation/interfaces/request/User";
-import { sendEmail } from "../../helpers/notificationsHelper/mail";
+import { _sendEmail } from "../../helpers/notificationsHelper/mail";
 import { getUserRoles } from "../../data-access/repositories/rolesRepository";
 import { initProducer } from "../../presentation/kafka/producer";
 import { JobQueueRequest } from "../../presentation/interfaces/request/JobQueueRequest";
 dotenv.config();
 import { Guid } from 'js-guid';
-import { EmailWithTemplateRequest } from "../../presentation/interfaces/request/EmailInterfaces";
+import { EmailWithTemplateRequest } from "../../presentation/interfaces/request/NotificationInterfaces";
 export const register = async (req: any) => {
     try {
         let response;

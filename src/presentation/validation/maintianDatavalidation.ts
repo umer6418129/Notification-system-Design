@@ -62,3 +62,14 @@ export const EmailConfSystemPrefSchema = Joi.object({
 export const NotificationPrefSchema = Joi.object({
     Email: Joi.boolean().required(),
 }).unknown(false);
+
+export const NotificationSchema = Joi.object({
+    notificationType: Joi.string().valid('email', 'inApp', 'sms').required(),
+    message: Joi.string().min(1).required(),
+    subject: Joi.string().when('notificationType', {
+        is: 'email',
+        then: Joi.string().min(1).required(),
+        otherwise: Joi.string().optional().allow('')
+    }),
+    whereToSend: Joi.string().required(),
+}).unknown(false);  // Disallow unknown fields
