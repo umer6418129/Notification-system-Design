@@ -1,5 +1,5 @@
 import express from "express";
-import { create } from "../controllers/NotificationService";
+import { create, getNotificationTypes } from "../controllers/NotificationController";
 import { validate } from "../middleware/validate";
 import { NotificationSchema } from "../validation/maintianDatavalidation";
 
@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /create-Notification:
+ * /create-notification:
  *   post:
  *     summary: Create Notification
  *     description: Create a new notification with the specified details
@@ -54,6 +54,24 @@ const router = express.Router();
  *     security:
  *       - bearerAuth: []  # Apply JWT token authorization
  */
-router.post("/create-Notification", validate(NotificationSchema), create)
+router.post("/create-notification", validate(NotificationSchema), create)
+/**
+ * @swagger
+ * /notification-types:
+ *   get:
+ *     summary: Types of Notification
+ *     description: Types of notification
+ *     tags: [Notification]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved types
+ *       400:
+ *         description: Invalid request data
+ *       500:
+ *         description: Internal server error
+ *     security:
+ *       - bearerAuth: []  # Apply JWT token authorization
+ */
+router.get("/notification-types", getNotificationTypes)
 
 module.exports = router

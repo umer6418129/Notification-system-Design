@@ -1,6 +1,6 @@
 import express from "express";
 import { create, verify } from "../controllers/UserController";
-import { create as createJob } from "../controllers/NotificationService";
+import { create as createJob } from "../controllers/NotificationController";
 import { validate } from "../middleware/validate";
 import { userLoginSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
 import { registration, userLogin } from "../controllers/AuthController";

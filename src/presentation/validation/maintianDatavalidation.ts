@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { queueTypesNames } from '../../utils/constant';
 
 export const userSchema = Joi.object({
     username: Joi.string().min(3).max(30).required(),
@@ -64,10 +65,18 @@ export const NotificationPrefSchema = Joi.object({
 }).unknown(false);
 
 export const NotificationSchema = Joi.object({
-    notificationType: Joi.string().valid('email', 'inApp', 'sms').required(),
+    notificationType: Joi.string().valid(
+        queueTypesNames.confirmationEmail,
+        queueTypesNames.informationEmail,
+        queueTypesNames.sensitiveEmail
+    ).required(),
     message: Joi.string().min(1).required(),
     subject: Joi.string().when('notificationType', {
-        is: 'email',
+        is: Joi.valid(
+            queueTypesNames.confirmationEmail,
+            queueTypesNames.informationEmail,
+            queueTypesNames.sensitiveEmail
+        ),
         then: Joi.string().min(1).required(),
         otherwise: Joi.string().optional().allow('')
     }),

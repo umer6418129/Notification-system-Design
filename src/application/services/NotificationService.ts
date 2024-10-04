@@ -21,11 +21,24 @@ export const createNotification = async (req: any) => {
             if (!getNotificationCOnfigurations) return responseHelper(0, { message: "Email Configurations not Updated" });
             let sendMail = await sendEmail({ email: data.whereToSend, message: data.message, subject: data.subject, emailConfigurations: getNotificationCOnfigurations.value })
             if (sendMail) return responseHelper(1, { message: responseMessages.success.replace("{replace}", "Email") });
-            else responseHelper(1, { message: responseMessages.wentWrongWhile.replace("{replace}", "send email") });
+            else return responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "send email") });
 
         }
         // return responseHelper(1, { message: "JOb Created" });
     } catch (error) {
         return catchResponseHelper(error)
     }
-} 
+}
+
+export const notificationTypes = async (req: any) => {
+    try {
+        let types = [
+            queueTypesNames.sensitiveEmail,
+            queueTypesNames.confirmationEmail,
+            queueTypesNames.informationEmail,
+        ];
+        return responseHelper(1, types);
+    } catch (error) {
+        return catchResponseHelper(error)
+    }
+}
