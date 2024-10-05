@@ -67,22 +67,24 @@ export const NotificationPrefSchema = Joi.object({
 export const NotificationSchema = Joi.object({
     notificationType: Joi.string()
         .valid(
-            'confirmationNotification',
-            'informationNotification',
-            'sensitiveNotification'
+            queueTypesNames.confirmationNotification,
+            queueTypesNames.informationNotification,
+            queueTypesNames.sensitiveNotification
         )
         .required(),
     message: Joi.string().min(1).required(),
     subject: Joi.string().optional(),
-    recipients: Joi.object({
-        email: Joi.string().email().required(),
-        phone: Joi.string().pattern(/^\+\d{10,15}$/).required()
-    })
-    .custom((value, helpers) => {
-        const uniqueValues = new Set(Object.values(value));
-        if (uniqueValues.size !== Object.keys(value).length) {
-            return helpers.error("any.duplicate", { value });
+    recipients: Joi.object().keys({
+        email: Joi.string().email().allow('').optional(),
+        phone: Joi.string().pattern(/^\+\d{10,15}$/).allow('').optional()
+    }).custom((value, helpers) => {
+        const { email, phone } = value;
+        const emailValid = email && email.trim() !== '';
+        const phoneValid = phone && phone.trim() !== '';
+
+        if (!emailValid && !phoneValid) {
+            return helpers.error('any.required');  // At least one must be provided
         }
-        return value;
-    }, "Unique Recipients Validation")
+        return value;  // Return the value if validation passes
+    }).required()  // Ensure recipients is a required field
 }).unknown(false);
