@@ -21,9 +21,9 @@ const router = express.Router();
  *             properties:
  *               notificationType:
  *                 type: string
- *                 enum: [email, inApp, sms]
+ *                 enum: [confirmationNotification, informationNotification, sensitiveNotification]
  *                 description: Type of the notification to be sent
- *                 example: email
+ *                 example: confirmationNotification
  *               message:
  *                 type: string
  *                 description: The content of the notification message
@@ -32,10 +32,19 @@ const router = express.Router();
  *                 type: string
  *                 description: The subject of the email (required only for email type notifications)
  *                 example: "Notification Subject"
- *               whereToSend:
- *                 type: string
- *                 description: The recipient's email or identifier
- *                 example: "user@example.com"
+ *               recipients:
+ *                 type: object
+ *                 properties:
+ *                   email:
+ *                     type: string
+ *                     format: email
+ *                     description: The email address to send the notification
+ *                     example: "md.farooq.ansari8959149@gmail.com"
+ *                   phone:
+ *                     type: string
+ *                     pattern: '^\\+\\d{10,15}$'
+ *                     description: The phone number to send the notification
+ *                     example: "+9200111654"
  *     responses:
  *       200:
  *         description: Notification created successfully
@@ -54,6 +63,7 @@ const router = express.Router();
  *     security:
  *       - bearerAuth: []  # Apply JWT token authorization
  */
+
 router.post("/create-notification", validate(NotificationSchema), create)
 /**
  * @swagger

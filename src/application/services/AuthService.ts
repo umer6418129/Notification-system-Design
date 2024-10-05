@@ -28,10 +28,10 @@ export const register = async (req: any) => {
             let creation = await create(body);
             if (creation) {
                 const guid = new Guid();
-                let type = queueTypes.find(x => x.name == queueTypesNames.confirmationEmail)?.id;
+                let type = queueTypes.find(x => x.name == queueTypesNames.confirmationNotification)?.id;
                 let _guid = guid.toString()
                 let dataObj: JobQueueRequest = {
-                    name: queueTypesNames.confirmationEmail + "--" + _guid,
+                    name: queueTypesNames.confirmationNotification + "--" + _guid,
                     payload: {
                         email: req.body.email,
                         template: emailTemplateTypes.sendOtp,
@@ -60,7 +60,7 @@ export const register = async (req: any) => {
                 }
             }
             let dataObj: JobQueueRequest = {
-                name: queueTypesNames.confirmationEmail + "--" + _guid,
+                name: queueTypesNames.confirmationNotification + "--" + _guid,
                 payload: emailPayload,
                 type: queueTypes.find(x => x.name == queueTypesNames.notifyOtpEmail)?.id,
                 GUID: _guid

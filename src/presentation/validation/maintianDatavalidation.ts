@@ -65,20 +65,24 @@ export const NotificationPrefSchema = Joi.object({
 }).unknown(false);
 
 export const NotificationSchema = Joi.object({
-    notificationType: Joi.string().valid(
-        queueTypesNames.confirmationEmail,
-        queueTypesNames.informationEmail,
-        queueTypesNames.sensitiveEmail
-    ).required(),
+    notificationType: Joi.string()
+        .valid(
+            'confirmationNotification',
+            'informationNotification',
+            'sensitiveNotification'
+        )
+        .required(),
     message: Joi.string().min(1).required(),
-    subject: Joi.string().when('notificationType', {
-        is: Joi.valid(
-            queueTypesNames.confirmationEmail,
-            queueTypesNames.informationEmail,
-            queueTypesNames.sensitiveEmail
-        ),
-        then: Joi.string().min(1).required(),
-        otherwise: Joi.string().optional().allow('')
-    }),
-    whereToSend: Joi.string().required(),
-}).unknown(false);  // Disallow unknown fields
+    subject: Joi.string().optional(),
+    recipients: Joi.object({
+        email: Joi.string().email().required(),
+        phone: Joi.string().pattern(/^\+\d{10,15}$/).required()
+    })
+    .custom((value, helpers) => {
+        const uniqueValues = new Set(Object.values(value));
+        if (uniqueValues.size !== Object.keys(value).length) {
+            return helpers.error("any.duplicate", { value });
+        }
+        return value;
+    }, "Unique Recipients Validation")
+}).unknown(false);

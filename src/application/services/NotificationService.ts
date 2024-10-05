@@ -11,17 +11,17 @@ export const createNotification = async (req: any) => {
         let data: NotificationInterface = req.body;
         let currentUserId = req.session.user.userId;
         if (
-            data.notificationType == queueTypesNames.confirmationEmail ||
-            data.notificationType == queueTypesNames.informationEmail ||
-            data.notificationType == queueTypesNames.sensitiveEmail || data.notificationType == "email") {
+            data.notificationType == queueTypesNames.confirmationNotification ||
+            data.notificationType == queueTypesNames.informationNotification ||
+            data.notificationType == queueTypesNames.sensitiveNotification) {
             if (!data.subject) return responseHelper(0, { message: responseMessages.isReuired.replace("{replace}", "Subject") });
             const user = await getUser({ _id: currentUserId });
             if (!user) return responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "User") });
             let getNotificationCOnfigurations = await getUserPref({ type: userPrefrencesTypes.emailSmtp, userId: currentUserId });
             if (!getNotificationCOnfigurations) return responseHelper(0, { message: "Email Configurations not Updated" });
-            let sendMail = await sendEmail({ email: data.whereToSend, message: data.message, subject: data.subject, emailConfigurations: getNotificationCOnfigurations.value })
-            if (sendMail) return responseHelper(1, { message: responseMessages.success.replace("{replace}", "Email") });
-            else return responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "send email") });
+            // let sendMail = await sendEmail({ email: data.recipients, message: data.message, subject: data.subject, emailConfigurations: getNotificationCOnfigurations.value })
+            // if (sendMail) return responseHelper(1, { message: responseMessages.success.replace("{replace}", "Email") });
+            // else return responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "send email") });
 
         }
         // return responseHelper(1, { message: "JOb Created" });
@@ -33,9 +33,10 @@ export const createNotification = async (req: any) => {
 export const notificationTypes = async (req: any) => {
     try {
         let types = [
-            queueTypesNames.sensitiveEmail,
-            queueTypesNames.confirmationEmail,
-            queueTypesNames.informationEmail,
+            queueTypesNames.sensitiveNotification,
+            queueTypesNames.confirmationNotification,
+            queueTypesNames.informationNotification,
+            queueTypesNames.promotionalNotification,
         ];
         return responseHelper(1, types);
     } catch (error) {

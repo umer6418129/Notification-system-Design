@@ -91,9 +91,10 @@ export const adminPermissions: string[] = [
 
 export const queueTypesNames = {
     notifyOtpEmail: "NOTIFY_OTP_EMAIL",
-    confirmationEmail: "Confirmation_email",
-    informationEmail: "Information_email",
-    sensitiveEmail: "Sensitive_email",
+    confirmationNotification: "Confirmation_notification",
+    informationNotification: "Information_eotification",
+    sensitiveNotification: "Sensitive_notification",
+    promotionalNotification: "Promotional_notification",
     logPrecessedJobQueue: "Proccesed_Job_Queue",
 }
 export const queueName = {
@@ -109,27 +110,33 @@ export const queueTypes: any[] = [
     },
     {
         id: 2,
-        name: queueTypesNames.sensitiveEmail,
+        name: queueTypesNames.sensitiveNotification,
         priority: 1,
-        chunk: 16
+        chunk: 6
     },
     {
         id: 3,
-        name: queueTypesNames.confirmationEmail,
+        name: queueTypesNames.confirmationNotification,
         priority: 2,
-        chunk: 16
+        chunk: 6
     },
     {
         id: 4,
-        name: queueTypesNames.informationEmail,
+        name: queueTypesNames.informationNotification,
         priority: 3,
-        chunk: 4
+        chunk: 6
     },
     {
         id: 5,
         name: queueTypesNames.logPrecessedJobQueue,
         priority: 1,
         chunk: 50
+    },
+    {
+        id: 6,
+        name: queueTypesNames.promotionalNotification,
+        priority: 4,
+        chunk: 8
     },
 ]
 export const kafkaMaintopicsNames = {
