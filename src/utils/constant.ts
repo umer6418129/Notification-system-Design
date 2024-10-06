@@ -174,7 +174,8 @@ export const PrefTypesArr = [
 ]
 
 export const exportBullQueueNames = {
-    Email: "Email"
+    Email: "Email",
+    Sms: "Sms"
 }
 
 export const queueStatus = {

@@ -23,6 +23,10 @@ const JobQueueSchema: Schema = new Schema<IJobQueue>(
       type: String,
       required: false,
     },
+    userId: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

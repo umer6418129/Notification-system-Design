@@ -1,10 +1,11 @@
 import { addJobs } from "../queue/queue";
-import { kafkaMaintopicsNames, queueTypesNames } from "../../utils/constant";
+import { kafkaMaintopicsNames, queueTypesNames, userPrefrencesTypes } from "../../utils/constant";
 import logger from "../middleware/logger";
 import { JobQueueRequest } from "../interfaces/request/JobQueueRequest";
 import { create } from "../../data-access/repositories/jobQueueRepository";
 import { kafka } from "./index";
 import { Guid } from "js-guid";
+import { getOnce as getUserPref } from "../../data-access/repositories/systemPrederencesRepository";
 
 interface ConsumerConfig {
   groupId: string;
@@ -13,7 +14,14 @@ interface ConsumerConfig {
 }
 
 const defaultProcessJob = async (job: any) => {
-  let success = await addJobs(job);
+  console.log(job);
+  let getNotificationCOnfigurations = await getUserPref({ userId: job.userId , type : userPrefrencesTypes.notificationPref  });
+  let checkNotificationPrev = getNotificationCOnfigurations.value;
+  console.log(checkNotificationPrev);
+  let success : boolean  = false;
+  if (checkNotificationPrev.Email == true) {
+    success = await addJobs(job);
+  }
   return success;
 };
 
@@ -29,7 +37,7 @@ const createConsumer = async ({ groupId, topics, processJob = defaultProcessJob 
           if (message.value) {
             const job = JSON.parse(message.value.toString());
             logger.info(`Consuming job ${JSON.stringify(job)} of partition ${partition}, topic: ${topic}`);
-            
+
             const success = await processJob(job);
 
             if (success) {
@@ -68,12 +76,24 @@ export const initAllConsumers = async () => {
       groupId: 'Transactional-messages-group',
       topics: [kafkaMaintopicsNames.transaction]
     });
+    await createConsumer({
+      groupId: 'Transactional-messages-group',
+      topics: [kafkaMaintopicsNames.transaction]
+    });
+    await createConsumer({
+      groupId: 'Transactional-messages-group',
+      topics: [kafkaMaintopicsNames.transaction]
+    });
+    await createConsumer({
+      groupId: 'Transactional-messages-group',
+      topics: [kafkaMaintopicsNames.transaction]
+    });
 
     await createConsumer({
       groupId: 'log-consumer-group',
       topics: [
-        queueTypesNames.notifyOtpEmail, 
-        kafkaMaintopicsNames.transaction, 
+        queueTypesNames.notifyOtpEmail,
+        kafkaMaintopicsNames.transaction,
         kafkaMaintopicsNames.promotional
       ],
       processJob: async (job: any) => {
@@ -84,6 +104,7 @@ export const initAllConsumers = async () => {
           payload: job.payload || {},
           GUID: job.GUID || guid,
           status: job.status || "InQueue",
+          userId: job.userId || null
         };
         const insertLog = await create(logObj);
         if (insertLog) {

@@ -4,6 +4,7 @@ export interface IJobQueue extends Document {
     payload: object;
     status: string;
     GUID: string;
+    userId?: string;
     createdAt?: Date;
     updatedAt?: Date;
   }

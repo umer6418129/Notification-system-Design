@@ -62,6 +62,7 @@ export const EmailConfSystemPrefSchema = Joi.object({
 }).unknown(false);
 export const NotificationPrefSchema = Joi.object({
     Email: Joi.boolean().required(),
+    Sms: Joi.boolean().required(),
 }).unknown(false);
 
 export const NotificationSchema = Joi.object({

@@ -25,7 +25,7 @@ export const initProducer = async (body: JobQueueRequest, topic: string , partit
 
         console.log('Message sent successfully:', sendFrProdu);
         await producer.disconnect();
-        return sendFrProdu;
+        return true;
     } catch (error) {
         console.log("Error on producer", error);
         return false;

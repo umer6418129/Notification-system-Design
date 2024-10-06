@@ -64,7 +64,9 @@ export const updateUserPreferences = async (req: any) => {
     } else if (url.includes("notification-preferences")) {
       let ifExist = await getOnce({ type: userPrefrencesTypes.notificationPref,userId: getUser.userId });
       let notificationValObj = {
-        Email : req.body.Email
+        Email : req.body.Email,
+        Sms : req.body.Sms,
+
       }
       if(!ifExist || ifExist.length <= 0){
         let data: SystemPrefRequest = {

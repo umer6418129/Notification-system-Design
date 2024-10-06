@@ -6,4 +6,5 @@ export interface JobQueueRequest {
     GUID : string
     status? : string
     topic? : string
+    userId? : string
 }
