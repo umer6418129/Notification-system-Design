@@ -5,3 +5,9 @@ export interface SystemPrefRequest {
     type?: string;
     value: Object;
 }
+
+export interface twilioConfigReuquest {
+    accountSid: string;
+    authToken: string;
+    fromPhone: string;
+}

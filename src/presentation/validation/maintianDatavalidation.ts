@@ -89,3 +89,13 @@ export const NotificationSchema = Joi.object({
         return value;  // Return the value if validation passes
     }).required()  // Ensure recipients is a required field
 }).unknown(false);
+export const TwilioPrefSchema = Joi.object({
+    accountSid: Joi.string().required(),
+    authToken: Joi.string().required(),
+    fromPhone: Joi.string()
+      .pattern(/^\+[1-9]\d{1,14}$/)
+      .required()
+      .messages({
+        "string.pattern.base": "Phone number must be in international format (e.g., +123456789) and up to 15 digits long.",
+      }),
+  }).unknown(false);

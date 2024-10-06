@@ -31,7 +31,7 @@ export function verifyToken(req: any, res: any, next: any) {
                         }
                         req.session.user = decoded;
                         req.session.currentUserId = decoded.userId;
-                        console.log(decoded);
+                        // console.log(decoded);
                         next();
                     }
                 }

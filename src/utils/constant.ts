@@ -165,7 +165,8 @@ export const kafkaMaintopics = [
 
 export const userPrefrencesTypes = {
     notificationPref: "Notification_Preferences",
-    emailSmtp: "Email_Configurations"
+    emailSmtp: "Email_Configurations",
+    twilloSmsConfiguration: "Twillo_Sms_Configurations",
 }
 
 export const PrefTypesArr = [

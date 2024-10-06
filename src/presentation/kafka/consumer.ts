@@ -1,5 +1,5 @@
 import { addJobs } from "../queue/queue";
-import { kafkaMaintopicsNames, queueTypesNames, userPrefrencesTypes } from "../../utils/constant";
+import { exportBullQueueNames, kafkaMaintopicsNames, queueTypesNames, userPrefrencesTypes } from "../../utils/constant";
 import logger from "../middleware/logger";
 import { JobQueueRequest } from "../interfaces/request/JobQueueRequest";
 import { create } from "../../data-access/repositories/jobQueueRepository";
@@ -15,12 +15,15 @@ interface ConsumerConfig {
 
 const defaultProcessJob = async (job: any) => {
   console.log(job);
-  let getNotificationCOnfigurations = await getUserPref({ userId: job.userId , type : userPrefrencesTypes.notificationPref  });
+  let getNotificationCOnfigurations = await getUserPref({ userId: job.userId, type: userPrefrencesTypes.notificationPref });
   let checkNotificationPrev = getNotificationCOnfigurations.value;
   console.log(checkNotificationPrev);
-  let success : boolean  = false;
+  let success: boolean = false;
   if (checkNotificationPrev.Email == true) {
     success = await addJobs(job);
+  }
+  if (checkNotificationPrev.Sms == true) {
+    success = await addJobs(job, exportBullQueueNames.Sms);
   }
   return success;
 };

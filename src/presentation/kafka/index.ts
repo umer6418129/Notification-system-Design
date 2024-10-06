@@ -42,12 +42,12 @@ export const init = async () => {
         //         },
         //     ]
         // });
-        // await admin.createPartitions({
-        //     topicPartitions: [
-        //         { topic: kafkaMaintopicsNames.transaction, count: 4 },
-        //         // { topic: kafkaMaintopicsNames.logPrecessedJobQueue, count: 3 },
-        //     ],
-        // });
+        await admin.createPartitions({
+            topicPartitions: [
+                { topic: kafkaMaintopicsNames.transaction, count: 4 },
+                // { topic: kafkaMaintopicsNames.logPrecessedJobQueue, count: 3 },
+            ],
+        });
         const list = await admin.fetchTopicMetadata();
         console.log("Listed Topic: " + JSON.stringify(list, null, 2));
 

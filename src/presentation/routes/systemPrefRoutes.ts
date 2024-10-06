@@ -1,6 +1,6 @@
 import express from "express";
 import { validate } from "../middleware/validate";
-import { EmailConfSystemPrefSchema, NotificationPrefSchema, updateUserSchema, userisActivationSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
+import { EmailConfSystemPrefSchema, NotificationPrefSchema, TwilioPrefSchema, updateUserSchema, userisActivationSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
 import { checkPermission } from "../middleware/authMiddleware";
 import { claims } from "../../utils/constant";
 import { get, getTypes, update } from "../controllers/SystemPreferences";
@@ -97,6 +97,54 @@ router.put("/email-configurations",checkPermission(claims.updateCongigurations),
  *         description: Internal server error
  */
 router.put("/notification-preferences",checkPermission(claims.updateCongigurations),validate(NotificationPrefSchema), update);
+/**
+ * @swagger
+ * /twillo-sms-configurations:
+ *   put:
+ *     summary: Update Twilio SMS Configurations
+ *     description: Update Twilio SMS configuration settings for the application.
+ *     tags: [System-Preferences]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               accountSid:
+ *                 type: string
+ *                 description: Twilio account SID
+ *                 example: ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ *               authToken:
+ *                 type: string
+ *                 description: Twilio authentication token
+ *                 example: your_auth_token
+ *               fromPhone:
+ *                 type: string
+ *                 description: Twilio phone number in international format
+ *                 example: +1234567890
+ *     security:
+ *       - bearerAuth: []  # Apply JWT token authorization
+ *     responses:
+ *       200:
+ *         description: Twilio configuration updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating the success of the update
+ *                   example: Twilio configuration updated successfully
+ *       400:
+ *         description: Invalid request data
+ *       401:
+ *         description: Unauthorized - JWT token missing or invalid
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/twillo-sms-configurations",checkPermission(claims.updateCongigurations),validate(TwilioPrefSchema), update);
 /**
  * @swagger
  * /system-preferences:

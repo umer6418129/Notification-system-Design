@@ -16,7 +16,7 @@ import connectToMongoDB from "./domain/models/mongodb";
 import { up } from "./data-access/seeders";
 import { initAllConsumers } from "./presentation/kafka/consumer";
 import { init } from "./presentation/kafka";
-import { runningQueue } from "./presentation/queue/worker";
+import { intQueues, runningQueue } from "./presentation/queue/worker";
 import { monitorQueue } from "./presentation/queue/monitor";
 
 
@@ -97,7 +97,7 @@ app.listen(PORT, async () => {
     await connectToMongoDB();
     await runSeeders();
     // await init()
-    await runningQueue();
+    await intQueues();
     await monitorQueue();
     await initAllConsumers();
   } catch (error) {
