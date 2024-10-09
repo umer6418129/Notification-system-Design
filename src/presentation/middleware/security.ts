@@ -2,14 +2,9 @@ import { scrypt, randomFill, createCipheriv, createDecipheriv, randomFillSync } 
 import dotenv from "dotenv";
 dotenv.config();
 
-// const algorithm = process.env.HASH_ALGORITHM as string;
-// const password = process.env.HASH_PASS as string;
-// const salt = process.env.HASH_SALT as string;
-const algorithm = 'aes-192-cbc';
-
-const password = "112233445566778899";
-
-const salt = "112233445566778899";
+const algorithm = process.env.HASH_ALGORITHM as string;
+const password = process.env.HASH_PASS as string;
+const salt = process.env.HASH_SALT as string;
 
 // Helper function for encryption
 export function encrypt(plaintext: string): Promise<string> {
