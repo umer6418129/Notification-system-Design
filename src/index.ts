@@ -105,6 +105,6 @@ app.listen(PORT, async () => {
     logger.error("Unable to connect to the database:" + error);
   }
 });
-
+export default app;
 // Define associations
 // defineAssociations();
