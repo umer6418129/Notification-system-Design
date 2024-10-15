@@ -77,7 +77,8 @@ export const updateUserPreferences = async (req: any) => {
         Email: req.body.Email,
         Sms: req.body.Sms,
       }
-      if (!ifExist || ifExist.length <= 0) {
+      ifExist = ifExist.find(x => x.type == userPrefrencesTypes.notificationPref);
+      if (!ifExist) {
         let data: SystemPrefRequest = {
           type: userPrefrencesTypes.notificationPref,
           value: notificationValObj,
@@ -95,7 +96,7 @@ export const updateUserPreferences = async (req: any) => {
           userId: getUser.userId
         }, data);
         if (_update) return responseHelper(1, { message: responseMessages.dataUpdated.replace("{replace}", "notification preferences") })
-        else responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "update notification preferences") })
+        else return responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "update notification preferences") })
       }
     } else if (url.includes("twillo-sms-configurations")) {
       let ifExist = await getOnce({ type: userPrefrencesTypes.twilloSmsConfiguration, userId: getUser.userId });

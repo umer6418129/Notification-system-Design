@@ -5,7 +5,7 @@ const userData = {
     username: 'User',
     email: 'user@example.com',
     password: 'User@123',
-    otp: '872042',
+    otp: '934512',
 };
 
 beforeAll(async () => {

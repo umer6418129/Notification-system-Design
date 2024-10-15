@@ -7,7 +7,7 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Node Base Api",
+            title: "Notification System  Api",
             version: "1.0.0",
             description: "A description of your API",
         },
