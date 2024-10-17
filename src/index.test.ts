@@ -95,7 +95,7 @@ const server = app.listen(PORT, async () => {
 
   try {
     await connectToMongoDB();
-    await runSeeders();
+    // await runSeeders();
     // await init()
     // await intQueues();
     // await monitorQueue();
