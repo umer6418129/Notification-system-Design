@@ -26,13 +26,11 @@ describe('Notification Flow', () => {
 
             const response = await request(app)
                 .get('/notification-types')
-                .set('Authorization', `Bearer ${jwtToken}`); // Set the Authorization header with the token
+                .set('Authorization', `Bearer ${jwtToken}`);
 
-            // Log the entire response for debugging
-            console.log('Notification types response:', response.body); // Debug log
-            console.log('Response status:', response.status); // Log the response status
+            console.log('Notification types response:', response.body);
+            console.log('Response status:', response.status);
 
-            // Assertions
             expect(response.status).toBe(200);
             expect(response.body.status).toBe(1);
         });
@@ -52,10 +50,6 @@ describe('Notification Flow', () => {
                         "phone": "+923954654465"
                     }
                 });
-
-            // Log the entire response for debugging
-            // console.log('Notification types response:', response.body); // Debug log
-            // console.log('Response status:', response.status); // Log the response status
 
             // Assertions
             expect(response.status).toBe(200);
