@@ -28,7 +28,7 @@ This project is a scalable and high-throughput notification system built with No
 
 ### Prerequisites
 
-- **Node.js** (version >= 14.x)
+- **Node.js** (version >= 18)
 - **Kafka** (running instance)
 - **Redis** (required by BullMQ)
 - **MongoDB** (optional for storing notification data)
