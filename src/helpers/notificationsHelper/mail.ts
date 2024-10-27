@@ -17,7 +17,7 @@ export const _sendEmail = async (
             let transporter = nodemailer.createTransport(emailConfigurations.EmailCongigurations);
             let mailOptions = {
                 // from: emailConfiurations.configurations?.auth?.user,
-                from: `Node Base <${emailConfiurations.EmailCongigurations.auth.user}>`,
+                from: `Notification System <${emailConfiurations.EmailCongigurations.auth.user}>`,
                 to: email,
                 cc: emailConfiurations.CC,
                 subject: `${message?.subject || ""}`,
@@ -49,7 +49,7 @@ export const sendEmail = async ({ email, message, emailConfigurations, subject }
             } as SMTPTransport.Options);
             let mailOptions = {
                 // from: emailConfiurations.configurations?.auth?.user,
-                from: `Node Base <${emailConfigurations.auth.user}>`,
+                from: `<${emailConfigurations.auth.user}>`,
                 to: email,
                 // cc: emailConfigurations.,
                 subject: `${subject}`,

@@ -28,7 +28,7 @@ export const createNotification = async (req: any) => {
                 GUID: _guid,
                 userId: currentUserId
             }
-            let produceMsg = await initProducer(dataObj, kafkaMaintopicsNames.transaction);
+            let produceMsg = await initProducer(dataObj, queueTypesNames.notifyOtpEmail);
             if (produceMsg) {
                 return responseHelper(1, { message: responseMessages.dataCreated.replace("{replace}", "Notification job") });
             }else{

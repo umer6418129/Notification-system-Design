@@ -29,10 +29,6 @@ export const init = async () => {
         await admin.createTopics({
             topics: [
                 {
-                    topic: queueTypesNames.notifyOtpEmail,
-                    numPartitions: 1
-                },
-                {
                     topic: kafkaMaintopicsNames.promotional,
                     numPartitions: 1
                 },
