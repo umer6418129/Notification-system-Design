@@ -122,8 +122,8 @@ export const updateUserPreferences = async (req: any) => {
           type: userPrefrencesTypes.twilloSmsConfiguration,
           userId: getUser.userId
         }, data);
-        if (_update) return responseHelper(1, { message: responseMessages.dataUpdated.replace("{replace}", "Email configurations") })
-        else responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "update Email configurations") })
+        if (_update) return responseHelper(1, { message: responseMessages.dataUpdated.replace("{replace}", "Twilio configurations") })
+        else responseHelper(0, { message: responseMessages.wentWrongWhile.replace("{replace}", "update twilio configurations") })
       }
     }
   } catch (error) {
