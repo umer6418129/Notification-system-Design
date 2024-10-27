@@ -10,11 +10,10 @@ import logger from "../../presentation/middleware/logger";
 
 export const getUsers = async (req: any) => {
     try {
-        let users = await get(req.body, ["username", "email"]);
-
-        // Map over each user and transform the data
+        let users = await get(req.body, ["_id","username", "email"]);
+        console.log(users);
         users = users.map((user: any) => {
-            const roles = user.UserRoles.map((userRole: any) => userRole.Role.name);
+            const roles = user.userRoles.map((userRole: any) => userRole.Role.name);
             return {
                 username: user.username,
                 email: user.email,
@@ -28,6 +27,21 @@ export const getUsers = async (req: any) => {
         return response;
     }
 };
+
+export const getUserInfo = async (req: any) => {
+    try {
+        let userId = req.session.user.userId;
+        let user = await getUsers({
+            body: {
+                _id: userId
+            }
+        })
+        return responseHelper(1, user?.data?.find((x:any)=> x?._id == userId || {}));
+    } catch (error) {
+        let response = catchResponseHelper(error);
+        return response;
+    }
+}
 
 export const createUser = async (req: any, res: any) => {
     try {
@@ -92,10 +106,10 @@ export const verifyUser = async (req: any) => {
             otp: null,
             isVerified: true
         })
-        let getUserRole = await getRoles({name : permanentRoles.notificationConsumer});
+        let getUserRole = await getRoles({ name: permanentRoles.notificationConsumer });
         let UserRole = getUserRole.find(x => x.name == permanentRoles.notificationConsumer);
-        if (UserRole){
-            let assignUser = await assignRole({userId : user.id , roleIds : [UserRole.id ||UserRole._id ]});
+        if (UserRole) {
+            let assignUser = await assignRole({ userId: user.id, roleIds: [UserRole.id || UserRole._id] });
             if (assignUser)
                 logger.info(`New User UuserId : ${user.id}`)
         }

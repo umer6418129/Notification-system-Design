@@ -1,5 +1,5 @@
 import express from "express";
-import { create, get, maintainUserActivation, update, verify } from "../controllers/UserController";
+import { _getUserInfo, create, get, maintainUserActivation, update, verify } from "../controllers/UserController";
 import { validate } from "../middleware/validate";
 import { updateUserSchema, userisActivationSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
 import { checkPermission } from "../middleware/authMiddleware";
@@ -184,6 +184,46 @@ router.put("/update-user-activation", checkPermission(claims.updateUser), valida
  *                             type: string
  *                             example: "document1.pdf"
  */
-router.get("/users", checkPermission(claims.ViewUser), get);
+router.get("/users", get);
+/**
+ * @swagger
+ * /users-info:
+ *   get:
+ *     summary: Retrieve an User
+ *     description: Get details of an User. This route requires authentication via a Bearer token.
+ *     tags:
+ *       - User
+ *     security:
+ *       - bearerAuth: []  # Apply JWT token authorization
+ *     responses:
+ *       200:
+ *         description: User details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 1
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     item:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                           example: 123
+ *                         name:
+ *                           type: string
+ *                           example: "User Name"
+ *                         docs:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                             example: "document1.pdf"
+ */
+router.get("/users-info", _getUserInfo);
 
 module.exports = router

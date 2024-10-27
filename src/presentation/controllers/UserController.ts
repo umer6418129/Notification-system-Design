@@ -1,10 +1,17 @@
-import { createUser, getUsers, isActive, userUpdate, verifyUser } from "../../application/services/UserService"
+import { createUser, getUserInfo, getUsers, isActive, userUpdate, verifyUser } from "../../application/services/UserService"
 import { catchResponseHelper } from "../../helpers/response"
 
 export const get = async (req: any, res: any) => {
     try {
         let users = await getUsers(req);
-        res.json(users);
+    } catch (error) {
+        res.json(catchResponseHelper(error));
+    }
+}
+export const _getUserInfo = async (req: any, res: any) => {
+    try {
+        let user = await getUserInfo(req);
+        res.json(user);
     } catch (error) {
         res.json(catchResponseHelper(error));
     }
