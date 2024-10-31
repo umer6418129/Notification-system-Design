@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import { decrypt, encrypt } from "../../presentation/middleware/security";
 import { UserRequest } from "../../presentation/interfaces/request/User";
 import { _sendEmail, sendEmail } from "../../helpers/notificationsHelper/mail";
-import { getUserRoles } from "../../data-access/repositories/rolesRepository";
+import { getUserRoles, roleClaims } from "../../data-access/repositories/rolesRepository";
 import { initProducer } from "../../presentation/kafka/producer";
 import { JobQueueRequest } from "../../presentation/interfaces/request/JobQueueRequest";
 dotenv.config();
@@ -104,5 +104,21 @@ const makeLogin = async (userObj: any) => {
 
     } catch (error) {
         throw error
+    }
+}
+
+export const getRolePermissions = async (req: any) => {
+    try {
+        let userRoles = req.session.user?.roles;
+        let userPermissions: any[] = await roleClaims({
+            roleId: { $in: userRoles }
+        });
+        userPermissions = userPermissions
+            ? userPermissions.map((x: any) => x.claimValue) || []
+            : [];
+        return responseHelper(1, userPermissions[0]);
+    } catch (error) {
+        let response = catchResponseHelper(error);
+        return response;
     }
 }

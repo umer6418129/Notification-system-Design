@@ -4,6 +4,7 @@ import { validate } from "../middleware/validate";
 import { updateUserSchema, userisActivationSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
 import { checkPermission } from "../middleware/authMiddleware";
 import { claims } from "../../utils/constant";
+import { _getRolePermissions } from "../controllers/AuthController";
 const router = express.Router();
 
 
@@ -225,5 +226,63 @@ router.get("/users", get);
  *                             example: "document1.pdf"
  */
 router.get("/users-info", _getUserInfo);
+
+/**
+ * @swagger
+ * /permissions:
+ *   get:
+ *     summary: Users permissions
+ *     description: 
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: User permission successful.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating successful permission.
+ *                   example: User successfully verified.
+ *       400:
+ *         description: Invalid request data (e.g., missing or invalid email or OTP).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message explaining the error.
+ *                   example: Invalid OTP or email.
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating that the user was not found.
+ *                   example: User not found.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating server error.
+ *                   example: Internal server error.
+ *     security:
+ *       - bearerAuth: []
+ */
+
+router.get("/permissions", _getRolePermissions);
 
 module.exports = router

@@ -3,7 +3,7 @@ import { create, verify } from "../controllers/UserController";
 import { create as createJob } from "../controllers/NotificationController";
 import { validate } from "../middleware/validate";
 import { userLoginSchema, userSchema, userVerificationSchema } from "../validation/maintianDatavalidation";
-import { registration, userLogin } from "../controllers/AuthController";
+import { _getRolePermissions, registration, userLogin } from "../controllers/AuthController";
 const router = express.Router();
 
 /**
