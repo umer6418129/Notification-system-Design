@@ -15,7 +15,7 @@ export const createNotification = async (req: any) => {
         if (
             data.notificationType == queueTypesNames.confirmationNotification ||
             data.notificationType == queueTypesNames.informationNotification ||
-            data.notificationType == queueTypesNames.sensitiveNotification) {
+            data.notificationType == queueTypesNames.sensitiveNotification || data.notificationType == queueTypesNames.promotionalNotification) {
             if (!data.subject) return responseHelper(0, { message: responseMessages.isReuired.replace("{replace}", "Subject") });
             const user = await getUser({ _id: currentUserId });
             if (!user) return responseHelper(0, { message: responseMessages.notFound.replace("{replace}", "User") });
