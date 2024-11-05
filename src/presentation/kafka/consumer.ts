@@ -65,60 +65,61 @@ const createConsumer = async ({ groupId, topics, processJob = defaultProcessJob 
 
 export const initAllConsumers = async () => {
   try {
-    await createConsumer({
-      groupId: 'general-group',
-      topics: [queueTypesNames.notifyOtpEmail]
-    });
 
-    await createConsumer({
-      groupId: 'promotional-messages-group',
-      topics: [kafkaMaintopicsNames.promotional]
-    });
+    // await createConsumer({
+    //   groupId: 'Transactional-messages-group',
+    //   topics: [kafkaMaintopicsNames.transaction]
+    // });
+    // await createConsumer({
+    //   groupId: 'Transactional-messages-group',
+    //   topics: [kafkaMaintopicsNames.transaction]
+    // });
+    // await createConsumer({
+    //   groupId: 'Transactional-messages-group',
+    //   topics: [kafkaMaintopicsNames.transaction]
+    // });
+    // await createConsumer({
+    //   groupId: 'Transactional-messages-group',
+    //   topics: [kafkaMaintopicsNames.transaction]
+    // });
 
-    await createConsumer({
-      groupId: 'Transactional-messages-group',
-      topics: [kafkaMaintopicsNames.transaction]
+    const transactionalConsumerPromises = Array.from({ length: 4 }, (_, index) => {
+      createConsumer({
+        groupId: 'Transactional-messages-group',
+        topics: [kafkaMaintopicsNames.transaction]
+      });
     });
-    await createConsumer({
-      groupId: 'Transactional-messages-group',
-      topics: [kafkaMaintopicsNames.transaction]
-    });
-    await createConsumer({
-      groupId: 'Transactional-messages-group',
-      topics: [kafkaMaintopicsNames.transaction]
-    });
-    await createConsumer({
-      groupId: 'Transactional-messages-group',
-      topics: [kafkaMaintopicsNames.transaction]
-    });
-
-    await createConsumer({
-      groupId: 'log-consumer-group',
-      topics: [
-        queueTypesNames.notifyOtpEmail,
-        kafkaMaintopicsNames.transaction,
-        kafkaMaintopicsNames.promotional
-      ],
-      processJob: async (job: any) => {
-        const guid = new Guid().toString();
-        const logObj: JobQueueRequest = {
-          type: job.type,
-          name: job.name || "",
-          payload: job.payload || {},
-          GUID: job.GUID || guid,
-          status: job.status || "InQueue",
-          userId: job.userId || null
-        };
-        const insertLog = await create(logObj);
-        if (insertLog) {
-          logger.info(`Job inserted into log GUID: ${insertLog.GUID}`);
-          return true;
-        } else {
-          logger.error(`Error logging job into DB GUID: ${logObj.GUID}`);
-          return false;
+    const logConsumerPromises = Array.from({ length: 1 }, (_, index) => {
+      createConsumer({
+        groupId: 'log-consumer-group',
+        topics: [
+          queueTypesNames.notifyOtpEmail,
+          kafkaMaintopicsNames.transaction,
+          kafkaMaintopicsNames.promotional
+        ],
+        processJob: async (job: any) => {
+          const guid = new Guid().toString();
+          const logObj: JobQueueRequest = {
+            type: job.type,
+            name: job.name || "",
+            payload: job.payload || {},
+            GUID: job.GUID || guid,
+            status: job.status || "InQueue",
+            userId: job.userId || null
+          };
+          const insertLog = await create(logObj);
+          if (insertLog) {
+            logger.info(`Job inserted into log GUID: ${insertLog.GUID}`);
+            return true;
+          } else {
+            logger.error(`Error logging job into DB GUID: ${logObj.GUID}`);
+            return false;
+          }
         }
-      }
+      });
     });
+    await Promise.all([...transactionalConsumerPromises,...logConsumerPromises]);
+
   } catch (error) {
     console.error("Error initializing consumers", error);
   }
