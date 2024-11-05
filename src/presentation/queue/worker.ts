@@ -10,8 +10,9 @@ import { update } from '../../data-access/repositories/jobQueueRepository';
 dotenv.config();
 export const intQueues = async () => {
   try {
-    let emailQueue = await runningQueue(exportBullQueueNames.Email);
-    let smsQueue = await runningQueue(exportBullQueueNames.Sms);
+    let emailQueue = runningQueue(exportBullQueueNames.Email);
+    let smsQueue = runningQueue(exportBullQueueNames.Sms);
+    await Promise.all([emailQueue,smsQueue])
     console.log("bull queues working fine");
   } catch (error: any) {
     logger.info('Error while processing the queue: ' + error.message);

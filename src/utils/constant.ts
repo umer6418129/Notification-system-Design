@@ -178,6 +178,10 @@ export const exportBullQueueNames = {
     Email: "Email",
     Sms: "Sms"
 }
+export const exportBullQueueNamesArr : string[] = [
+    exportBullQueueNames.Email,
+    exportBullQueueNames.Sms
+]
 
 export const queueStatus = {
     InQueue: "In Queue",

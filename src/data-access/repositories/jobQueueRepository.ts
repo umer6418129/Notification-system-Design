@@ -24,6 +24,15 @@ export const get = async (params: any): Promise<any[]> => {
         return [];
     }
 };
+export const getCount = async (params: any): Promise<number> => {
+    try {
+        const items = await JobQueue.countDocuments(params);
+        return items || 0;
+    } catch (error: any) {
+        catchResponseHelper(error);
+        return 0;
+    }
+};
 
 // Get item by ID
 export const getById = async (id: string) => {

@@ -12,6 +12,7 @@ const itemOneRoutes = require("./itemOneRoutes");
 const rolesRoutes = require("./rolesRoutes");
 const systemPrefRoutes = require("./systemPrefRoutes");
 const notificationRoutes = require("./notificationRoutes");
+const statsRoutes = require("./statsRoutes");
 
 
 router.use(authRoutes);
@@ -22,6 +23,7 @@ router.use(emailTemplateRoutes);
 router.use(itemOneRoutes);
 router.use(rolesRoutes);
 router.use(notificationRoutes);
+router.use(statsRoutes);
 
 
 
